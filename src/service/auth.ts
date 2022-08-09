@@ -1,8 +1,11 @@
+import { GithubAuthProvider } from 'firebase/auth';
 import { authService } from './firebase';
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from 'firebase/auth';
 import { SetStateAction } from 'react';
@@ -19,6 +22,7 @@ export const signUp = async (email: email, password: password) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      throw new Error(errorMessage);
     });
 };
 
@@ -31,6 +35,7 @@ export const signIn = async (email: email, password: password) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      throw new Error(errorMessage);
     });
 };
 
@@ -54,4 +59,38 @@ export const me = (setIsLoggedIn: React.Dispatch<SetStateAction<string>>) => {
       setIsLoggedIn('');
     }
   });
+};
+
+export const googleSignIn = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(authService, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      throw new Error(errorMessage);
+    });
+};
+
+export const githubSignIn = () => {
+  const provider = new GithubAuthProvider();
+  signInWithPopup(authService, provider)
+    .then((result) => {
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GithubAuthProvider.credentialFromError(error);
+      throw new Error(errorMessage);
+    });
 };

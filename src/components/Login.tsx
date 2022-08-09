@@ -9,6 +9,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUp, setSignUp] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target;
@@ -27,10 +28,42 @@ const Login = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (signUp) {
-      AuthService.signUp(email, password);
-    } else {
-      AuthService.signIn(email, password);
+    try {
+      if (signUp) {
+        AuthService.signUp(email, password);
+      } else {
+        AuthService.signIn(email, password);
+      }
+    } catch (error) {
+      if (typeof error == 'string') {
+        setError(error);
+      } else {
+        setError((error as Error).message);
+      }
+    }
+  };
+
+  const handleGoogle = () => {
+    try {
+      AuthService.googleSignIn();
+    } catch (error) {
+      if (typeof error == 'string') {
+        setError(error);
+      } else {
+        setError((error as Error).message);
+      }
+    }
+  };
+
+  const handleGithub = () => {
+    try {
+      AuthService.githubSignIn();
+    } catch (error) {
+      if (typeof error == 'string') {
+        setError(error);
+      } else {
+        setError((error as Error).message);
+      }
     }
   };
 
@@ -40,6 +73,7 @@ const Login = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {signUp ? 'Sign Up' : 'Sign In'} to React-shop
         </h2>
+        {error && <p>{error}</p>}
         <form
           action="submit"
           className="mt-8 space-y-6"
@@ -93,13 +127,15 @@ const Login = () => {
             </button>
           </div>
           <div className="flex items-center justify-around">
-            {signUp && <span className='text-lg font-bold'>Sign Up with SNS</span>}
-            <button className="btn btn-ghost">
+            {signUp && (
+              <span className="text-lg font-bold">Sign Up with SNS</span>
+            )}
+            <div className="btn btn-ghost" onClick={handleGithub}>
               <img src={githubIcon} className="h-10 w-10" alt="Icon_github" />
-            </button>
-            <button className="btn btn-ghost">
+            </div>
+            <div className="btn btn-ghost" onClick={handleGoogle}>
               <img src={googleIcon} className="h-10 w-10" alt="Icon_google" />
-            </button>
+            </div>
           </div>
           <div className="flex items-center justify-end">
             <label htmlFor="signUp">If you don't have ID? </label>
