@@ -3,6 +3,9 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
 
+
+import * as AuthService from '../service/auth';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +18,7 @@ const Login = () => {
         setEmail(value);
         break;
 
+
       case 'password':
         setPassword(value);
         break;
@@ -24,13 +28,63 @@ const Login = () => {
     }
   };
 
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (signUp) {
+        AuthService.signUp(email, password);
+      } else {
+        AuthService.signIn(email, password);
+      }
+    } catch (error) {
+      if (typeof error == 'string') {
+        alert(error);
+      } else {
+        alert((error as Error).message);
+      }
+    }
+  };
+
+  const handleGoogle = () => {
+    try {
+      AuthService.googleSignIn();
+    } catch (error) {
+      if (typeof error == 'string') {
+        alert(error);
+      } else {
+        alert((error as Error).message);
+      }
+    }
+  };
+
+  const handleGithub = () => {
+    try {
+      AuthService.githubSignIn();
+    } catch (error) {
+      if (typeof error == 'string') {
+        alert(error);
+      } else {
+        alert((error as Error).message);
+      }
+    }
+  };
+
+
   return (
     <section className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+          {signUp ? 'Sign Up' : 'Sign In'} to React-shop
         </h2>
-        <form action="submit" className="mt-8 space-y-6" method="POST">
+
+        <form
+          action="submit"
+          className="mt-8 space-y-6"
+          method="POST"
+          onSubmit={handleSubmit}
+        >
+
           <input type="hidden" name="remember" defaultValue="true" />
           <div>
             <label htmlFor="email" className="sr-only">
@@ -74,18 +128,22 @@ const Login = () => {
                   aria-hidden="true"
                 />
               </span>
-              Sign in
+              {signUp ? 'Sign Up' : 'Sign In'}
             </button>
           </div>
           <div className="flex items-center justify-around">
-            <button className="btn btn-ghost">
+            {signUp && (
+              <span className="text-lg font-bold">Sign Up with SNS</span>
+            )}
+            <div className="btn btn-ghost" onClick={handleGithub}>
               <img src={githubIcon} className="h-10 w-10" alt="Icon_github" />
-            </button>
-            <button className="btn btn-ghost">
+            </div>
+            <div className="btn btn-ghost" onClick={handleGoogle}>
               <img src={googleIcon} className="h-10 w-10" alt="Icon_google" />
-            </button>
+            </div>
           </div>
-          <div>
+          <div className="flex items-center justify-end">
+
             <label htmlFor="signUp">If you don't have ID? </label>
             <input
               type="checkbox"
