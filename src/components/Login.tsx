@@ -3,6 +3,7 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
 
+
 import * as AuthService from '../service/auth';
 
 const Login = () => {
@@ -16,6 +17,8 @@ const Login = () => {
       case 'email':
         setEmail(value);
         break;
+
+
       case 'password':
         setPassword(value);
         break;
@@ -24,6 +27,7 @@ const Login = () => {
         break;
     }
   };
+
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,6 +70,7 @@ const Login = () => {
     }
   };
 
+
   return (
     <section className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -79,6 +84,7 @@ const Login = () => {
           method="POST"
           onSubmit={handleSubmit}
         >
+
           <input type="hidden" name="remember" defaultValue="true" />
           <div>
             <label htmlFor="email" className="sr-only">
@@ -137,6 +143,7 @@ const Login = () => {
             </div>
           </div>
           <div className="flex items-center justify-end">
+
             <label htmlFor="signUp">If you don't have ID? </label>
             <input
               type="checkbox"
