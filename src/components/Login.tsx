@@ -9,7 +9,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUp, setSignUp] = useState(false);
-  const [error, setError] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = event.target;
@@ -36,9 +35,9 @@ const Login = () => {
       }
     } catch (error) {
       if (typeof error == 'string') {
-        setError(error);
+        alert(error);
       } else {
-        setError((error as Error).message);
+        alert((error as Error).message);
       }
     }
   };
@@ -48,9 +47,9 @@ const Login = () => {
       AuthService.googleSignIn();
     } catch (error) {
       if (typeof error == 'string') {
-        setError(error);
+        alert(error);
       } else {
-        setError((error as Error).message);
+        alert((error as Error).message);
       }
     }
   };
@@ -60,9 +59,9 @@ const Login = () => {
       AuthService.githubSignIn();
     } catch (error) {
       if (typeof error == 'string') {
-        setError(error);
+        alert(error);
       } else {
-        setError((error as Error).message);
+        alert((error as Error).message);
       }
     }
   };
@@ -73,7 +72,7 @@ const Login = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {signUp ? 'Sign Up' : 'Sign In'} to React-shop
         </h2>
-        {error && <p>{error}</p>}
+
         <form
           action="submit"
           className="mt-8 space-y-6"
