@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
+import tw from 'tailwind-styled-components';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
 
-
 import * as AuthService from '../service/auth';
 
 const Login = () => {
+  const LoginSection = tw.section`
+  min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8
+  `;
+  const LoginTitle = tw.h2`
+  mt-6 text-center text-3xl font-extrabold text-gray-900
+  `;
+  const EmailInput = tw.input`
+  appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
+  `;
+
+  const PasswordInput = tw.input`
+  appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
+  `;
+
+  const SignInBtn = tw.button`
+  group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+  `;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUp, setSignUp] = useState(false);
@@ -18,7 +35,6 @@ const Login = () => {
         setEmail(value);
         break;
 
-
       case 'password':
         setPassword(value);
         break;
@@ -27,7 +43,6 @@ const Login = () => {
         break;
     }
   };
-
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,13 +85,10 @@ const Login = () => {
     }
   };
 
-
   return (
-    <section className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <LoginSection>
       <div className="max-w-md w-full space-y-8">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {signUp ? 'Sign Up' : 'Sign In'} to React-shop
-        </h2>
+        <LoginTitle>{signUp ? 'Sign Up' : 'Sign In'} to React-shop</LoginTitle>
 
         <form
           action="submit"
@@ -84,18 +96,16 @@ const Login = () => {
           method="POST"
           onSubmit={handleSubmit}
         >
-
           <input type="hidden" name="remember" defaultValue="true" />
           <div>
             <label htmlFor="email" className="sr-only">
               Email
             </label>
-            <input
+            <EmailInput
               type="email"
               name="email"
               autoComplete="email"
               required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="What is your email"
               onChange={handleChange}
               value={email}
@@ -105,23 +115,19 @@ const Login = () => {
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <input
+            <PasswordInput
               type="password"
               name="password"
               placeholder="Write your password"
               autoComplete="current-password"
               required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               onChange={handleChange}
               value={password}
             />
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
+            <SignInBtn type="submit">
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <LockClosedIcon
                   className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
@@ -129,7 +135,7 @@ const Login = () => {
                 />
               </span>
               {signUp ? 'Sign Up' : 'Sign In'}
-            </button>
+            </SignInBtn>
           </div>
           <div className="flex items-center justify-around">
             {signUp && (
@@ -143,7 +149,6 @@ const Login = () => {
             </div>
           </div>
           <div className="flex items-center justify-end">
-
             <label htmlFor="signUp">If you don't have ID? </label>
             <input
               type="checkbox"
@@ -154,7 +159,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-    </section>
+    </LoginSection>
   );
 };
 
