@@ -15,10 +15,10 @@ interface SignUpInputs {
 }
 
 const SignUp = () => {
-  const LoginSection = tw.section`
+  const SignupSection = tw.section`
   min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8
   `;
-  const LoginTitle = tw.h2`
+  const SignupTitle = tw.h2`
   mt-6 text-center text-3xl font-extrabold text-gray-900
   `;
 
@@ -54,9 +54,9 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogle = () => {
+  const handleGoogle = async () => {
     try {
-      AuthService.googleSignIn();
+      await AuthService.googleSignIn();
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
@@ -66,9 +66,9 @@ const SignUp = () => {
     }
   };
 
-  const handleGithub = () => {
+  const handleGithub = async () => {
     try {
-      AuthService.githubSignIn();
+      await AuthService.githubSignIn();
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
@@ -79,9 +79,9 @@ const SignUp = () => {
   };
 
   return (
-    <LoginSection>
+    <SignupSection>
       <div className="max-w-md w-full space-y-8">
-        <LoginTitle>Sign in to React-shop</LoginTitle>
+        <SignupTitle>Sign up to React-shop</SignupTitle>
         <form
           action="submit"
           className="mt-8 space-y-6"
@@ -163,7 +163,7 @@ const SignUp = () => {
           </div>
         </form>
       </div>
-    </LoginSection>
+    </SignupSection>
   );
 };
 export default SignUp;

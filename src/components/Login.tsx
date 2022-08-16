@@ -18,7 +18,7 @@ const Login = () => {
   min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8
   `;
   const LoginTitle = tw.h2`
-  mt-6 text-center text-3xl font-extrabold text-gray-900
+  mt-6 text-center text-3xl font-extrabold text-gray-700
   `;
   const Input = tw.input`
   appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
@@ -56,9 +56,9 @@ const Login = () => {
     }
   };
 
-  const handleGoogle = () => {
+  const handleGoogle = async () => {
     try {
-      AuthService.googleSignIn();
+      await AuthService.googleSignIn();
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
@@ -68,9 +68,9 @@ const Login = () => {
     }
   };
 
-  const handleGithub = () => {
+  const handleGithub = async () => {
     try {
-      AuthService.githubSignIn();
+      await AuthService.githubSignIn();
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
@@ -83,7 +83,7 @@ const Login = () => {
   return (
     <LoginSection>
       <div className="max-w-md w-full space-y-8">
-        <LoginTitle>Sign in to React-shop</LoginTitle>
+        <LoginTitle>Log in to React-shop</LoginTitle>
         <form
           action="submit"
           className="mt-8 space-y-6"
@@ -131,7 +131,7 @@ const Login = () => {
                   aria-hidden="true"
                 />
               </span>
-              Sign In
+              Log In
             </SignInBtn>
           </div>
           <div className="flex items-center justify-around">
