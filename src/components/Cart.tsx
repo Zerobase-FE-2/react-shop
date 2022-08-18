@@ -1,56 +1,49 @@
-import {useState,useEffect} from "react";
+import {useState} from "react";
+import { useSelector,useDispatch } from "react-redux";
+import axios from "axios";
+import useSWR from "swr";
 import CartEmpty from "./CartEmpty";
 
-// 추후 삭제 예정 fetch API
-fetch("https://fakestoreapi.com/products")
-.then((response) => {
-    return response.json();
-})
-.then((data) => {
-    localStorage.setItem(CART_ITEM, JSON.stringify(data));
-    if(!localStorage.getItem(CART_ITEM)){
-        localStorage.setItem(CART_ITEM, "[]")
-    }
-})
-
-const CART_ITEM = "CART_ITEM";
-const cartItemFromLocalStorage = JSON.parse(localStorage.getItem(CART_ITEM) || "[]");
 type item = {
+    category : string;
+    description : string;
     id : number;
-    title : string;
-    price : number;
     image : string;
+    price : number;
+    rating : number;
+    title : string;
+    count : number;
+}
+
+type product = {
+    id : number;
     count : number;
 }
 
 export default function Cart() {
-    const [cart, setCart] = useState(cartItemFromLocalStorage);
-    // 추후 item 개별 페이지에서 addToCartButton 클릭시 localstorage의 CART_ITEM 배열에 { id : n, count : 1 } 식으로 추가 예정
-    const [count, setCount] = useState(1);
-    const [total, setTotal] = useState(0)
-
-    useEffect(() => {
-        return () => {
-            localStorage.setItem(CART_ITEM,JSON.stringify(cart));
-        }
-    });
-
-    useEffect(() => {
-        setTotal(calculateTotalPrice)
-    },[])
+    async function fetcher(url:string) {
+        const result = await axios.get(url)
+        return result.data
+    }
+    const { data : docs } = useSWR('post', () => fetcher('https://fakestoreapi.com/products'))
+    const data : any = useSelector((state) => state);
+    const dispatch = useDispatch()
+    const [cart, setCart] = useState(data || []);
 
     const removeFromCart = (id : number) => {
-        const temp = cart.filter((item : item) => item.id !== id);
+        const temp = cart.filter((product : product) => product.id !== id);
         setCart(temp);
     }
     
     const calculateTotalPrice = () : number => {
-        let price = 0;
-        cart.reduce((acc : number, cur : item) => {
-            acc += cur.price;
-            return price = acc;
+        let total = 0;
+        const arr = docs.filter((item : item) => cart.map((product : product) => product.id).includes(item.id));
+        const arr2 = arr.map((item : item) => item.price * cart.find((product : product) => product.id === item.id).count);
+        arr2.reduce((acc : number, cur : number) => {
+            acc += cur;
+            return total = acc;
         },0);
-        return price;
+        return total;
     }
 
     return(
@@ -60,29 +53,27 @@ export default function Cart() {
             </div>
             <div className="cartItems">
                 {cart.length === 0 && <CartEmpty />}
-                {cart.length !== 0 && cart.map((item : item, idx : number) => (
-                    <div className="cartItem" key={idx}>
-                        <img src={item.image} alt="" />
+                {cart.length !== 0 && docs.filter((items : item) => cart.map((item : item) => item.id).includes(items.id)).map((item : item) => (
+                    <div className="cartItem" key={item.id}>
+                        <img src={item.image} alt={item.title} />
                         <div className="itemInfo">
                             <h2>{item.title}</h2>
-                            <p>$ {(item.price * count).toFixed(2)}</p>
+                            <p>$ {(item.price * cart.find((product : product) => product.id === item.id).count).toFixed(2)}</p>
                             <button onClick={() => {
-                                count === 1 ? removeFromCart(item.id) 
-                                : setCount(count - 1)
-                                setTotal(total - (item.price * count))
+                                cart.find((product : product) => product.id === item.id).count === 1 ? removeFromCart(item.id) 
+                                : dispatch({type: "REMOVE", payload : {id : item.id, count : item.count}})
                             }}>-</button>
-                            {count}
+                            {cart.find((product : product) => product.id === item.id).count}
                             <button onClick={() => {
-                                setCount(count + 1)
-                                setTotal(total + (item.price * count))
+                                dispatch({type : "ADD", payload : {id : item.id, count : item.count}})
                             }}>+</button>
                         </div>
                     </div>
                 ))}
             </div>
             <div className="cartTotalPrice">
-                    <label htmlFor="totalPrice">총 : ${total.toFixed(2)} </label>
-                    <button id="totalPrice"> 구매하기 </button>
+                    <label htmlFor="buyBtn">총 : ${Number(calculateTotalPrice().toFixed(2))} </label>
+                    <button id="buyBtn"> 구매하기 </button>
             </div>
         </div>
     )
