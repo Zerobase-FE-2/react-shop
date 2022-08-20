@@ -17,7 +17,6 @@ export const signUp = async (email: email, password: password) => {
     .then((userCredential) => {
       //signed In
       const user = userCredential.user;
-      console.log('signed up', user);
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -30,12 +29,15 @@ export const signIn = async (email: email, password: password) => {
   await signInWithEmailAndPassword(authService, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log('sign in', user);
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      throw new Error(errorMessage);
+      if (errorCode == 'auth/wrong-password') {
+        throw new Error('비밀번호가 틀렸습니다.');
+      } else {
+        throw new Error(errorMessage);
+      }
     });
 };
 
