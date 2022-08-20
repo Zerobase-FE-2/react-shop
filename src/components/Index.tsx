@@ -20,7 +20,6 @@ const Index = () => {
           description: 'hello',
         },
       ]}
-      totalSlides={3}
     />
   );
 };

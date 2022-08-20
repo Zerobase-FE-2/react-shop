@@ -2,3 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --up: 3;
+  --card-margin: 12px;
+  --card-shadow: rgba(46, 49, 52, 0.4);
+  --cardWidth: calc(100vw);
+  --carouselWidth: calc(var(--cardWidth) * var(--num));
+  --carouselLeftMargin: calc(0vw - var(--cardWidth));
+}
+
+.slider {
+  width: 100%;
+  margin: 0 0 0 var(--carouselLeftMargin);
+}
+
+.slider li {
+  text-align: center;
+  width: var(--cardWidth);
+  box-sizing: border-box;
+}
+
+.prev {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+
+.next {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+
+@keyframes next {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(calc(0px + var(--cardWidth)));
+  }
+}
+
+@keyframes prev {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(calc(0px - var(--cardWidth)));
+  }
+}
