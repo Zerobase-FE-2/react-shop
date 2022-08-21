@@ -42,5 +42,6 @@ const reducer = (state  : item[] | undefined, action : action) => {
             return newState;
     }
 }
+export default reducer;
 
-export const store = createStore(reducer);
+// export const store = createStore(reducer);

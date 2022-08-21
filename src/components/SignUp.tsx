@@ -1,8 +1,8 @@
 import tw from 'tailwind-styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
+
 
 import * as AuthService from '../service/auth';
 
@@ -156,9 +156,11 @@ const SignUp = () => {
 
             <div className="btn btn-ghost" onClick={handleGithub}>
               <img src={githubIcon} className="h-10 w-10" alt="Icon_github" />
+              {/* <img src='../assets/icon/iconGithub.svg' className="h-10 w-10" alt="Icon_github" /> */}
             </div>
             <div className="btn btn-ghost" onClick={handleGoogle}>
               <img src={googleIcon} className="h-10 w-10" alt="Icon_google" />
+              {/* <img src='../assets/icon/iconGoogle.svg' className="h-10 w-10" alt="Icon_google" /> */}
             </div>
           </div>
         </form>
