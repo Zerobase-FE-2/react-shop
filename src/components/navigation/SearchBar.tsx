@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -84,20 +85,26 @@ export default function SearchBar() {
     const onChangeData = (e:React.FormEvent<HTMLInputElement>) => {
       setKeyword(e.currentTarget.value);
     };
-  async function fetchData() {
-    return fetch(
-      'https://fakestoreapi.com/products'
-    )
-      .then((res) => res.json())
-      .then((data) => data.slice(0,100))
-  }
+  // async function fetchData() {
+  //   return fetch(
+  //     'https://fakestoreapi.com/products'
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => data.slice(0,100))
+  // }
+  const calledItems = useSelector((state:any) => state.itemList);
+  // console.log(calledItems.state);
+  let itemList = calledItems.state;
+  // console.log(itemList);
+
   interface ICity {
     includes(data:string): boolean;
     title?: any;
   }
   const updateData = async() => {
-    const res = await fetchData();
-    let b = res.filter((list: ICity) => list.title.includes(keyword) === true)
+    // const res = await itemList;
+    const res = itemList;
+    let b = res.filter((list: ICity) => list.title.toLowerCase().includes(keyword) === true || list.title.toLowerCase().split(' ').join('').includes(keyword) === true || list.title.toUpperCase().includes(keyword) === true || list.title.toUpperCase().split(' ').join('').includes(keyword) === true)
                 .slice(0,10);
     // console.log(b);
     setKeyItems(b);

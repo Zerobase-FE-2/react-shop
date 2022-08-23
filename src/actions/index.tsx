@@ -15,6 +15,12 @@ export function filteritem(filterwhat:string) {
   };
 }
 
+// export function addcart() {
+//   return {
+//     type: types.ADD_ON_CART,
+//   };
+// }
+
 export function additem() {
   return {
     type: types.ADD_ITEM,

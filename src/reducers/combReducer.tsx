@@ -1,9 +1,9 @@
 import { combineReducers } from "redux"
 import itemFilter from './itemFilter'
-import reducer from '../store/store'
+import cartReducer from './cartReducer'
 
 const reducers = combineReducers({
- itemFilter, reducer,
+  itemList: itemFilter, cart: cartReducer,
 });
 
 export default reducers;

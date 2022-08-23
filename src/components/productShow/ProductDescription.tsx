@@ -1,18 +1,15 @@
-import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router';
-import useSWR from 'swr';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function ProductDescription() {
   const params = useParams();
   // const {category} = props;
-  const calledItems = useSelector((state:any) => state);
-  // console.log(calledItems.itemFilter);
-  // let itemList = calledItems.itemFilter.state;
+  const calledItems = useSelector((state:any) => state.itemList);
 
-  let selectedItem = calledItems.itemFilter.state[Number(params.docId) - 1];
+  let selectedItem = calledItems.state[Number(params.docId) - 1];
   let firstLocation = '';
   if(selectedItem.category === "men's clothing" || selectedItem.category === "women's clothing"){
     firstLocation = '패션';
@@ -70,7 +67,7 @@ export default function ProductDescription() {
                 ${selectedItem.price}
               </ItemInfo>
               <Shopbutton>장바구니에 담기</Shopbutton>
-              <Shopbutton>장바구니로 이동</Shopbutton>
+              <Shopbutton><Link to='/cart'>장바구니로 이동</Link></Shopbutton>
             </ItemDescriptionWrap>
         </div>
        {/* ))} */}
