@@ -1,7 +1,5 @@
 import {useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import axios from "axios";
-import useSWR from "swr";
 import CartEmpty from "./CartEmpty";
 
 type item = {
@@ -21,15 +19,20 @@ type product = {
 }
 
 export default function Cart() {
-    async function fetcher(url:string) {
-        const result = await axios.get(url)
-        return result.data
-    }
-    const { data : docs } = useSWR('post', () => fetcher('https://fakestoreapi.com/products'))
-    const data : any = useSelector((state) => state);
-    const dispatch = useDispatch()
-    const [cart, setCart] = useState(data || []);
+    //------------
+    // async function fetcher(url:string) {
+    //     const result = await axios.get(url)
+    //     return result.data
+    // }
+    // const { data : docs } = useSWR('post', () => fetcher('https://fakestoreapi.com/products'))
+    const calledItems = useSelector((state:any) => state.itemList);
+    const docs = calledItems.state;
+    //------------
 
+    const data : any = useSelector((state:any) => state.cart);
+    const dispatch = useDispatch()
+
+    const [cart, setCart] = useState(data || []);
     const removeFromCart = (id : number) => {
         const temp = cart.filter((product : product) => product.id !== id);
         setCart(temp);

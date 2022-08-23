@@ -4,15 +4,7 @@ import styled from 'styled-components';
 import SearchBar from './SearchBar';
 
 export default function Navbar() {
-  const [itemFilter, setitemFilter] = useState({text:'',itemCategory:''})
-
-  function updateFilter(key:string, value:string){
-    setitemFilter({
-      ...itemFilter,
-      [key]: value,
-    });
-  }
-
+  
   return (
     <div>
       <div className='navigation' style={{display: "block", float:'right', padding:"0px", width:"100%", height:"50px", backgroundColor:"purple"}}>
@@ -34,14 +26,18 @@ export default function Navbar() {
               <button style={{}}>
                 <Link to='/login'> 로그인페이지{"임시"} </Link>
               </button>
-              <button style={{}}>
+              {/* <button style={{}}>
                 <Link to='/cart'> 쇼핑카트{"임시"} </Link>
-              </button>
+              </button> */}
             </div>
           </LinkReset>
         </div>
         <div style={{display:"inline", float:'right'}}>
+          <button>테마</button>
           <SearchBar />
+          <button>
+            <Link to='/cart'> 장바구니 </Link>
+          </button>
         </div>
       </div>
       <Outlet />

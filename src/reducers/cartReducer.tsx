@@ -1,5 +1,3 @@
-import { createStore } from 'redux'
-
 type action = {
     type : string;
     payload : {
@@ -20,7 +18,7 @@ type item = {
 };
 
 
-const reducer = (state  : item[] | undefined, action : action) => {
+const cartReducer = (state  : item[] | undefined, action : action) => {
     if(state === undefined) return [];
     let newState : item[] = [...state];
     switch (action.type) {
@@ -42,6 +40,4 @@ const reducer = (state  : item[] | undefined, action : action) => {
             return newState;
     }
 }
-export default reducer;
-
-// export const store = createStore(reducer);
+export default cartReducer;
