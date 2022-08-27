@@ -18,13 +18,13 @@ type item = {
 };
 
 
-const cartReducer = (state  : item[] | undefined, action : action) => {
-    if(state === undefined) return [];
+const cartReducer = (state : item[] = [], action : action) => {
     let newState : item[] = [...state];
+    let selected = newState.find((item : item) => item.id === action.payload.id);
     switch (action.type) {
         case "ADD":
-            if(newState.find((item : item) => item.id === action.payload.id)){
-                let product : any = newState.find(item => item.id === action.payload.id);
+            if(selected){
+                let product : item = selected
                 product.count += 1;
                 newState.concat(product)
             } else {
@@ -32,10 +32,14 @@ const cartReducer = (state  : item[] | undefined, action : action) => {
             }
             return newState;
         case "REMOVE":
-                let product : any = newState.find(item => item.id === action.payload.id);
+            if(selected?.count === 1){
+                newState = newState.filter(item => item.id !== selected?.id);
+            } else {
+                let product : any = selected
                 product.count -= 1;
                 newState.concat(product);
-                return newState;
+            }
+            return newState;
         default:
             return newState;
     }

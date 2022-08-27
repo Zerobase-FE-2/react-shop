@@ -3,9 +3,11 @@ import { useParams } from 'react-router';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 export default function ProductDescription() {
   const params = useParams();
+  const dispatch = useDispatch();
   // const {category} = props;
   const calledItems = useSelector((state:any) => state.itemList);
 
@@ -66,7 +68,7 @@ export default function ProductDescription() {
               <ItemInfo>
                 ${selectedItem.price}
               </ItemInfo>
-              <Shopbutton>장바구니에 담기</Shopbutton>
+              <Shopbutton onClick={() => dispatch({type : "ADD", payload : {id : selectedItem.id, count : 1}})}>장바구니에 담기</Shopbutton>
               <Shopbutton><Link to='/cart'>장바구니로 이동</Link></Shopbutton>
             </ItemDescriptionWrap>
         </div>
