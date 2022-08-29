@@ -1,67 +1,42 @@
-import React, { useState } from 'react'
 import {Link, Outlet} from 'react-router-dom'
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components'
 import SearchBar from './SearchBar';
 
 export default function Navbar() {
-  
+  const NavBar = tw.nav`
+  w-full h-16 p-2 bg-gray-900 flex
+  `
+  const LeftBar = tw.div`
+  w-3/5 flex items-center
+  `
+  const RightBar = tw.div`
+  w-2/5 flex relative
+  `
+  const HomeBtn = tw.h1`
+  inline text-white text-sm md:text-base lg:text-lg font-bold px-3 py-1
+  `
+  const NavBtn = tw.span`
+  text-white invisible sm:visible sm:text-xs md:text-sm lg:text-base font-semibold px-3 py-2 mx-2 hover:bg-gray-700 hover:rounded-lg
+  `
   return (
-    <div>
-      <div className='navigation' style={{display: "block", float:'right', padding:"0px", width:"100%", height:"50px", backgroundColor:"purple"}}>
-        <div style={{display:"inline"}}>
-          <LinkReset>
-            <div style={{display: "inline-block"}}>
-              <Link to='/'>React Shop </Link>
-            </div>
-            <div style={{display: "inline-block"}}>
-              <button style={{}}>
-                <Link to='/fasion'> 패션 </Link>
-              </button>
-              <button style={{}}>
-                <Link to='/accessory'> 악세서리 </Link>
-              </button>
-              <button style={{}}>
-                <Link to='/digital'> 디지털 </Link>
-              </button>
-              <button style={{}}>
-                <Link to='/login'> 로그인페이지{"임시"} </Link>
-              </button>
-              {/* <button style={{}}>
-                <Link to='/cart'> 쇼핑카트{"임시"} </Link>
-              </button> */}
-            </div>
-          </LinkReset>
-        </div>
-        <div style={{display:"inline", float:'right'}}>
-          <button>테마</button>
-          <SearchBar />
-          <button>
-            <Link to='/cart'> 장바구니 </Link>
-          </button>
-        </div>
-      </div>
-      <Outlet />
-    </div>
+  <div>
+    <NavBar>
+      <LeftBar>
+          <Link to='/'><HomeBtn>React Shop</HomeBtn></Link>
+          <Link to='/fasion'><NavBtn>패션</NavBtn></Link>
+          <Link to='/accessory'><NavBtn>악세서리</NavBtn></Link>
+          <Link to='/digital'><NavBtn>디지털</NavBtn></Link>
+          <Link to='/login'><NavBtn>로그인</NavBtn></Link>
+      </LeftBar>
+      <RightBar>
+          <NavBtn>테마</NavBtn>
+          <div className='w-48 overflow-auto'>
+            <SearchBar/>
+          </div>
+          <Link to='/cart'><NavBtn>장바구니</NavBtn></Link>
+      </RightBar>
+    </NavBar>
+    <Outlet />
+  </div>
   )
 }
-const LinkReset = styled.div`
-  display: inline-block;
-  margin-top: 15px;
-  a:link {
-    color : black;
-    text-decoration: none;
-  }
-  a:visited {
-    color : black;
-    text-decoration: none;
-  }
-  a:hover {
-    color : black;
-    background-color: grey;
-    text-decoration: none;
-  }
-  a:active {
-    color : black;
-    text-decoration: none;
-  }
-`

@@ -1,14 +1,22 @@
-import React from 'react';
-import {Link, Outlet} from 'react-router-dom';
 import ProductsTable from './ProductsTable';
+import tw from 'tailwind-styled-components';
+import BreadCrumb from '../navigation/BreadCrumb';
 
 export default function FashionPage() {
+  
+  const Title = tw.h1`
+  text-3xl font-bold p-6 text-center
+  `
 
   return (
-    <div style={{display: "block", width:"100%", height:"100%"}}>
-      <div>홈 {">"} 패션</div>
-      <h1 style={{textAlign:"center"}}>패션</h1>
-      <ProductsTable category={"fasion"}/>
+    <div>
+      <div className='m-4'>
+        <BreadCrumb />
+      </div>
+      <Title>패션</Title>
+      <div>
+        <ProductsTable category={"fasion"}/>
+      </div>
     </div>
   )
 }
