@@ -1,22 +1,23 @@
-import {Link, Outlet} from 'react-router-dom'
-import tw from 'tailwind-styled-components'
+import {Link, Outlet} from 'react-router-dom';
+import tw from 'tailwind-styled-components';
 import SearchBar from './SearchBar';
+import { ShoppingBagIcon, SunIcon, MoonIcon } from '@heroicons/react/outline'
 
 export default function Navbar() {
   const NavBar = tw.nav`
-  w-full h-16 p-2 bg-gray-900 flex
+  w-full h-16 p-2 bg-gray-900 flex justify-between
   `
   const LeftBar = tw.div`
-  w-3/5 flex items-center
+  flex items-center
   `
   const RightBar = tw.div`
-  w-2/5 flex relative
+  flex
   `
   const HomeBtn = tw.h1`
   inline text-white text-sm md:text-base lg:text-lg font-bold px-3 py-1
   `
-  const NavBtn = tw.span`
-  text-white invisible sm:visible sm:text-xs md:text-sm lg:text-base font-semibold px-3 py-2 mx-2 hover:bg-gray-700 hover:rounded-lg
+  const NavBtn = tw.div`
+  text-white invisible md:visible md:text-sm lg:text-base font-semibold px-3 py-2 mx-2 hover:bg-gray-700 hover:rounded-lg
   `
   return (
   <div>
@@ -29,11 +30,9 @@ export default function Navbar() {
           <Link to='/login'><NavBtn>로그인</NavBtn></Link>
       </LeftBar>
       <RightBar>
-          <NavBtn>테마</NavBtn>
-          <div className='w-48 overflow-auto'>
-            <SearchBar/>
-          </div>
-          <Link to='/cart'><NavBtn>장바구니</NavBtn></Link>
+          <NavBtn><SunIcon className='w-7 h-7 mx-2' /></NavBtn>
+          <SearchBar/>
+          <Link to='/cart'><NavBtn><ShoppingBagIcon className='w-7 h-7 mx-2' /></NavBtn></Link>
       </RightBar>
     </NavBar>
     <Outlet />
