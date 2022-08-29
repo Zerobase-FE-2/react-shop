@@ -1,6 +1,5 @@
-import React from 'react';
 import { useParams } from 'react-router';
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -44,63 +43,40 @@ export default function ProductDescription() {
 
   // console.log(itemList);
 
+  const Product = tw.div`
+  flex flex-col lg:flex-row px-10 mt-16
+  `
+
   return (
     <>
       {/* <div>ProductDescription{params.docId}</div> */}
       {/* <div>{location} {" > "} {itemList[Number(params.docId) - 1].title}</div> */}
       <div className='m-4'><BreadCrumb category={selectedItem.category} title={selectedItem.title} /></div>
       {/* {itemList.filter((item:any) => item.id === Number(params.docId)).map((doc:any) => ( */}
-        <div key={params.docId} style={{display: "flex", margin:"10px", width:"1344px", height:"320px", backgroundColor:"grey"}}>
-            
-            <div style={{display: "inline-block", width:"300px", height:"300px", backgroundColor:"white"}}>
-              <img src={selectedItem.image} className="logo" alt="itemimg" style={{margin:"75px", width:"150px", height:"150px"}} />
-            </div>
-
-            <ItemDescriptionWrap>
-              <ItemTitle>
+        <Product key={params.docId}>
+            <figure className='w-full lg:w-96 bg-white p-4 mb-4 lg:mb-0 rounded-2xl'>
+              <img src={selectedItem.image} className="img-primary w-full h-72" alt={selectedItem.title} />
+            </figure>
+            <div className='w-full lg:px-8 flex flex-col justify-between'>
+              <h1 className='text-2xl font-bold'>
                 {selectedItem.title}
-              </ItemTitle>
-              <ItemInfo>
+              </h1>
+              <p className='py-4 lg:py-0'>
                 {selectedItem.description}
-              </ItemInfo>
-              <ItemInfo>
+              </p>
+              <div>
                 {selectedItem.rating.rate}/{selectedItem.rating.count}
-              </ItemInfo>
-              <ItemInfo>
+              </div>
+              <p className='text-xl font-semibold py-4 lg:py-0'>
                 ${selectedItem.price}
-              </ItemInfo>
-              <Shopbutton onClick={() => dispatch({type : "ADD", payload : {id : selectedItem.id, count : 1}})}>장바구니에 담기</Shopbutton>
-              <Shopbutton><Link to='/cart'>장바구니로 이동</Link></Shopbutton>
-            </ItemDescriptionWrap>
-        </div>
+              </p>
+              <div>
+                <button className='btn-primary mr-4' onClick={() => dispatch({type : "ADD", payload : {id : selectedItem.id, count : 1}})}>장바구니에 담기</button>
+                <button className='btn-primary bg-inherit border-solid border-2 border-gray-100 hover:bg-gray-500 hover:border-gray-500'><Link to='/cart'>장바구니로 이동</Link></button>
+              </div>
+            </div>
+        </Product>
        {/* ))} */}
     </>
   )
-
-
 }
-
-const ItemDescriptionWrap = styled.div`
-  display: inline-block;
-  margin: 10px;
-  width: 950px;
-`
-
-const ItemTitle = styled.h3`
-  display: block;
-  margin: 10px;
-  width: 950px;
-`
-
-const ItemInfo = styled.div`
-  display: block;
-  margin: 10px;
-  width: 950px;
-`
-
-const Shopbutton = styled.button`
-  display: inline-block;
-  margin: 10px;
-  width: 120px;
-  height: 40px;
-`
