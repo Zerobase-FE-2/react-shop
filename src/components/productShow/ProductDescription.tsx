@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import BreadCrumb from '../navigation/BreadCrumb';
 
 export default function ProductDescription() {
   const params = useParams();
@@ -47,7 +48,7 @@ export default function ProductDescription() {
     <>
       {/* <div>ProductDescription{params.docId}</div> */}
       {/* <div>{location} {" > "} {itemList[Number(params.docId) - 1].title}</div> */}
-      <div>{firstLocation} {" > "} {selectedItem.title}</div>
+      <div className='m-4'><BreadCrumb category={selectedItem.category} title={selectedItem.title} /></div>
       {/* {itemList.filter((item:any) => item.id === Number(params.docId)).map((doc:any) => ( */}
         <div key={params.docId} style={{display: "flex", margin:"10px", width:"1344px", height:"320px", backgroundColor:"grey"}}>
             

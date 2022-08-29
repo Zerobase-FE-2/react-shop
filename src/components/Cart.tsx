@@ -3,7 +3,8 @@ import { useSelector,useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartEmpty from "./CartEmpty";
 import tw from "tailwind-styled-components"
-import localStorage from "redux-persist/es/storage";
+
+import BreadCrumb from './navigation/BreadCrumb'
 
 type item = {
     category : string;
@@ -68,7 +69,7 @@ export default function Cart() {
     return(
         <>
             <div className="m-4">
-                <span> 홈 <span> &gt; </span> 장바구니 </span>
+                <BreadCrumb />
             </div>
             <Cart>
                 <CartItems>
