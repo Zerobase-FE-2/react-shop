@@ -5,7 +5,7 @@ import BreadCrumb from '../navigation/BreadCrumb'
 export default function AccessoryPage() {
 
   const Title = tw.h1`
-  text-3xl font-bold p-6 text-center text-black dark:text-white
+  text-3xl font-bold pb-6 text-center text-black dark:text-white
   `
 
   return (

@@ -56,16 +56,16 @@ export default function SearchBar() {
         }
     },[keyword]) //키워드가 변경되면 api를 호출
     const SearchContainer = tw.div`
-      flex items-center
+    flex items-center
     `
     const SearchBar = tw.input`
-      w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
+    hidden md:block absolute md:static top-16 left-0 w-full md:w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
     `
     const AutoCompleteContainer = tw.div`
-      w-60 h-auto absolute z-10 top-16 p-1 bg-white dark:bg-gray-700 shadow-xl
+    absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-auto p-1 bg-white dark:bg-gray-700 shadow-xl
     `
     const SearchedList = tw.ul`
-    w-full h-80 overflow-hidden overflow-y-scroll
+    w-screen md:w-full h-fit
     `
     const SearchedItem = tw.li`
     p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
