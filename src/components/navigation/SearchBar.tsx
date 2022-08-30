@@ -59,16 +59,16 @@ export default function SearchBar() {
       flex items-center
     `
     const SearchBar = tw.input`
-      w-42 h-5/6 px-4 bg-gray-700 rounded-sm outline-none text-white
+      w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
     `
     const AutoCompleteContainer = tw.div`
-      w-60 h-auto absolute z-10 top-16 p-1 bg-gray-700
+      w-60 h-auto absolute z-10 top-16 p-1 bg-white dark:bg-gray-700 shadow-xl
     `
     const SearchedList = tw.ul`
     w-full h-80 overflow-hidden overflow-y-scroll
     `
     const SearchedItem = tw.li`
-    p-1 hover:bg-gray-600 text-white
+    p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
     `
     return (
     <SearchContainer>

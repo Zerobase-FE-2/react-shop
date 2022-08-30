@@ -37,12 +37,12 @@ export default function ProductsTable(props:any) {
   return (
     <div className='flex flex-wrap justify-center'>
       {filtering(category, catego).map((doc:any) => (
-        <div key={doc.id} className='w-full md:w-1/3 lg:w-1/5 m-2 shrink-0'>
+        <div key={doc.id} className='w-full md:w-1/3 lg:w-1/5 m-2 shrink-0 border dark:border-none rounded-lg'>
           <Link to={`/${doc.id}`}>
-            <figure className='h-80 bg-white flex justify-center items-center rounded-t-lg'>
+            <figure className='h-80 bg-white flex justify-center items-center dark:rounded-t-lg'>
               <img src={doc.image} className="img-primary" alt={doc.title}/>
             </figure>
-            <div className='h-36 bg-gray-700 flex flex-col p-4 justify-between items-start rounded-b-lg'>
+            <div className='h-36 text-black dark:text-gray-400 bg-gray-200 dark:bg-gray-700 flex flex-col p-4 justify-between items-start dark:rounded-b-lg overflow-auto'>
               <span className='text-start font-semibold'>{doc.title}</span>
               <span className='font-semibold'>${doc.price}</span>
             </div>

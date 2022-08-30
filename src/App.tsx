@@ -17,7 +17,6 @@ import Cart from './components/Cart';
 // import { store } from './store/store'
 
 function App() {
-
   const dispatch = useDispatch();
   const productListApi = 'https://fakestoreapi.com/products';
   async function fetcher(url:string){

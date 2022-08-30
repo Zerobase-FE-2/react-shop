@@ -54,7 +54,7 @@ export default function Cart() {
         return total;
     }
     const Cart= tw.section`
-    flex flex-col w-full box-border p-4 lg:flex-row justify-between
+    flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
     `
     const CartItems = tw.section`
     flex flex-col
@@ -68,7 +68,7 @@ export default function Cart() {
 
     return(
         <>
-            <div className="m-4">
+            <div className="p-4 bg-white dark:bg-gray-800">
                 <BreadCrumb />
             </div>
             <Cart>
@@ -78,8 +78,8 @@ export default function Cart() {
                         <CartItem key={item.id}>
                             <Link to={`/${item.id}`}><img className="img-primary" src={item.image} alt={item.title} /></Link>
                             <ItemInfo>
-                                <Link to={`/${item.id}`}><h2 className="text-xl font-semibold hover:underline underline-offset-2">{item.title}</h2></Link>
-                                <p className="text-3xl my-4">$ {(item.price * cart.find((product : product) => product.id === item.id).count).toFixed(2)}</p>
+                                <Link to={`/${item.id}`}><h2 className="text-xl text-black dark:text-gray-400 font-semibold hover:underline underline-offset-2">{item.title}</h2></Link>
+                                <p className="text-3xl my-4 text-black dark:text-gray-400">$ {(item.price * cart.find((product : product) => product.id === item.id).count).toFixed(2)}</p>
                                 <div>
                                     <button className="bg-violet-700 rounded-l-lg px-4 h-12 text-white font-semibold hover:bg-violet-800" onClick={() => {
                                         if(cart.find((product : product) => product.id === item.id).count === 1) {
@@ -89,7 +89,7 @@ export default function Cart() {
                                             dispatch({type: "REMOVE", payload : {id : item.id, count : item.count}})
                                         }
                                     }}>-</button>
-                                    <span className="mx-4">{cart.find((product : product) => product.id === item.id).count}</span>
+                                    <span className="mx-4 text-black dark:text-gray-400">{cart.find((product : product) => product.id === item.id).count}</span>
                                     <button className="bg-violet-700 rounded-r-lg px-4 h-12 text-white font-semibold hover:bg-violet-800" onClick={() => {
                                         dispatch({type : "ADD", payload : {id : item.id, count : item.count}})
                                     }}>+</button>
@@ -98,12 +98,11 @@ export default function Cart() {
                         </CartItem>
                     ))}
                 </CartItems>
-                <div className="mt-10">
-                        <label className="text-xl text-center md:text-2xl" htmlFor="buyBtn">총 : ${Number(calculateTotalPrice().toFixed(2))} </label>
+                <div className="flex items-center mt-10 w-72 h-fit">
+                        <label className="text-2xl lg:text-xl text-center text-black dark:text-gray-400" htmlFor="buyBtn">총 : ${Number(calculateTotalPrice().toFixed(2))} </label>
                         <button className="btn-primary ml-5" id="buyBtn"> 구매하기 </button>
                 </div>
             </Cart>
         </>
-        
     )
 }
