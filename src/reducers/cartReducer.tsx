@@ -39,6 +39,8 @@ const cartReducer = (state = initState, action : action) => {
                 newState[idx].count -= 1;
             }
             return newState;
+        case "RESET":
+            return [];
         default:
             return state;
     }
