@@ -2,6 +2,7 @@ import {useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartEmpty from "./CartEmpty";
+import PopUp from "./PopUp";
 import tw from "tailwind-styled-components"
 
 import BreadCrumb from './navigation/BreadCrumb'
@@ -23,20 +24,13 @@ type product = {
 }
 
 export default function Cart() {
-    //------------
-    // async function fetcher(url:string) {
-    //     const result = await axios.get(url)
-    //     return result.data
-    // }
-    // const { data : docs } = useSWR('post', () => fetcher('https://fakestoreapi.com/products'))
     const calledItems = useSelector((state:any) => state.itemList);
     const docs = calledItems.state;
-    //------------
-
     const data : any = useSelector((state:any) => state.cart);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const [cart, setCart] = useState(data);
+    const [popUp, setPopUp] = useState(false);
 
     const removeFromCart = (id : number) => {
         const temp = cart.filter((product : product) => product.id !== id);
@@ -54,7 +48,7 @@ export default function Cart() {
         return total;
     }
     const Cart= tw.section`
-    flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
+    relative flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
     `
     const CartItems = tw.section`
     flex flex-col
@@ -100,8 +94,12 @@ export default function Cart() {
                 </CartItems>
                 <div className="flex items-center mt-10 w-72 h-fit">
                         <label className="text-2xl lg:text-xl text-center text-black dark:text-gray-400" htmlFor="buyBtn">총 : ${Number(calculateTotalPrice().toFixed(2))} </label>
-                        <button className="btn-primary ml-5" id="buyBtn"> 구매하기 </button>
+                        <button className="btn-primary ml-5" id="buyBtn" onClick={() => {
+                            setPopUp(!popUp)
+
+                        }}> 구매하기 </button>
                 </div>
+                {popUp && <PopUp state={popUp} func={setPopUp} />}
             </Cart>
         </>
     )
