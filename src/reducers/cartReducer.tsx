@@ -17,31 +17,30 @@ type item = {
     count : number;
 };
 
+const initState : item[] = []
 
-const cartReducer = (state : item[] = [], action : action) => {
+
+const cartReducer = (state = initState, action : action) => {
     let newState : item[] = [...state];
-    let selected = newState.find((item : item) => item.id === action.payload.id);
     switch (action.type) {
         case "ADD":
-            if(selected){
-                let product : item = selected
-                product.count += 1;
-                newState.concat(product)
+            if(newState.find((item : item) => item.id === action.payload.id)){
+                const idx = newState.findIndex((item : item) => item.id === action.payload.id);
+                newState[idx].count += 1;
             } else {
                 newState.push(action.payload);
             }
             return newState;
         case "REMOVE":
-            if(selected?.count === 1){
-                newState = newState.filter(item => item.id !== selected?.id);
+            const idx = newState.findIndex((item : item) => item.id === action.payload.id);
+            if(newState[idx].count === 1){
+                newState = newState.filter(item => item.id !== newState[idx].id);
             } else {
-                let product : any = selected
-                product.count -= 1;
-                newState.concat(product);
+                newState[idx].count -= 1;
             }
             return newState;
         default:
-            return newState;
+            return state;
     }
 }
 export default cartReducer;
