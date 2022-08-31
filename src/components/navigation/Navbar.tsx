@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import {Link, Outlet} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import SearchBar from './SearchBar';
 import { ShoppingBagIcon, SunIcon, MoonIcon, SearchIcon } from '@heroicons/react/outline'
-import localStorage from 'redux-persist/es/storage';
 
 type item = {
   id : number;
@@ -14,16 +13,24 @@ type item = {
   count : number;
 };
 
+type product = {
+  id : number;
+  count : number;
+}
+
 export default function Navbar() {
-  const [theme, setTheme] = useState('dark');
+  const initialMode = useSelector((state : any) => state.mode) 
+  const [theme, setTheme] = useState(initialMode || 'light');
   const colorTheme = theme === 'dark' ? 'light' : 'dark';
+
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove(colorTheme);
     root.classList.add(theme);
-    localStorage.setItem('theme', theme)
   },[theme, colorTheme])
-  const condition = useSelector((state : any) => state.cart);
+
+  const condition : item[] = useSelector((state : any) => state.cart);
+  const dispatch = useDispatch();
   const count = condition.reduce((acc : number, cur : item) => {
     acc += cur.count;
     return acc;
@@ -57,7 +64,10 @@ export default function Navbar() {
           <Link to='/login'><NavBtn>로그인</NavBtn></Link>
       </LeftBar>
       <RightBar>
-          <NavBtn className="block" onClick={() => setTheme(colorTheme)}>{colorTheme === 'light' ? <SunIcon className='w-7 h-7 mx-2' /> : <MoonIcon className='w-7 h-7 mx-2' />}</NavBtn>
+          <NavBtn className="block" onClick={() => {
+            setTheme(colorTheme);
+            dispatch({type : "CHANGE", payload : colorTheme});
+            }}>{colorTheme === 'light' ? <SunIcon className='w-7 h-7 mx-2' /> : <MoonIcon className='w-7 h-7 mx-2' />}</NavBtn>
           <SearchBar />
           <NavBtn className="block md:hidden"><SearchIcon className='w-7 h-7 mx-2' onClick={() => {
             const search = document.querySelector('input');

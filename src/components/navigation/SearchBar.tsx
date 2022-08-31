@@ -17,6 +17,21 @@ interface autoDatas {
       count: number;
   }
 }
+const SearchContainer = tw.div`
+flex items-center
+`
+const Search = tw.input`
+hidden md:block absolute md:static top-16 left-0 w-full md:w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
+`
+const AutoCompleteContainer = tw.div`
+absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-auto p-1 bg-white dark:bg-gray-700 shadow-xl
+`
+const SearchedList = tw.ul`
+w-screen md:w-full h-fit
+`
+const SearchedItem = tw.li`
+p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
+`
 export default function SearchBar() {
 	const [keyword, setKeyword] = useState<string>("");
     const [keyItems, setKeyItems] = useState<autoDatas[]>([]);
@@ -55,24 +70,9 @@ export default function SearchBar() {
           clearTimeout(debounce)
         }
     },[keyword]) //키워드가 변경되면 api를 호출
-    const SearchContainer = tw.div`
-    flex items-center
-    `
-    const SearchBar = tw.input`
-    hidden md:block absolute md:static top-16 left-0 w-full md:w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
-    `
-    const AutoCompleteContainer = tw.div`
-    absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-auto p-1 bg-white dark:bg-gray-700 shadow-xl
-    `
-    const SearchedList = tw.ul`
-    w-screen md:w-full h-fit
-    `
-    const SearchedItem = tw.li`
-    p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
-    `
     return (
     <SearchContainer>
-      <SearchBar value={keyword} placeholder='검색' onChange={onChangeData}/>
+      <Search value={keyword} placeholder='검색' onChange={onChangeData}/>
       {keyItems.length > 0 && keyword && (
         <AutoCompleteContainer>
          <SearchedList>
