@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
+import useInterval from '../hooks/useInterval';
 
 type Image = {
   url: string;
   title?: string;
   description?: string;
 };
+
+const delay = 5000;
 const SliderSection = tw.section`
 w-full relative overflow-x-hidden slidersection
 `;
@@ -23,6 +26,7 @@ absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opaci
 
 const Slider = ({ images }: { images: Image[] }) => {
   const [moveClass, setMoveClass] = useState('');
+  const [moveAuto, setMoveAuto] = useState(true);
   const [carouselItems, setCarouselItems] = useState<Image[]>(images);
 
   const handleAnimationEnd = () => {
@@ -42,6 +46,13 @@ const Slider = ({ images }: { images: Image[] }) => {
     }
   };
 
+  useInterval(
+    () => {
+      setMoveClass('next');
+    },
+    moveAuto ? delay : null
+  );
+
   const shiftNext = (copy: Image[]) => {
     let firstcard = copy.shift();
     if (firstcard) {
@@ -49,8 +60,17 @@ const Slider = ({ images }: { images: Image[] }) => {
       setCarouselItems(copy);
     }
   };
+
+  const handleCheck = () => {
+    setMoveAuto(!moveAuto);
+  };
+
   return (
-    <SliderSection>
+    <SliderSection
+      onMouseEnter={() => {
+        if (moveAuto) handleCheck();
+      }}
+    >
       <SliderList
         className={`${moveClass}`}
         onAnimationEnd={handleAnimationEnd}
@@ -80,7 +100,25 @@ const Slider = ({ images }: { images: Image[] }) => {
           </li>
         ))}
       </SliderList>
-      <PrevBtn onClick={() => setMoveClass('prev')}>
+      <label
+        htmlFor="default-toggle"
+        className="inline-flex absolute top-10 right-10 items-center cursor-pointer "
+      >
+        <input
+          type="checkbox"
+          checked={moveAuto}
+          id="default-toggle"
+          className="sr-only peer"
+          onChange={handleCheck}
+        />
+        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      </label>
+      <PrevBtn
+        onClick={() => {
+          if (moveAuto) handleCheck();
+          setMoveClass('prev');
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-8 w-8"
@@ -94,7 +132,12 @@ const Slider = ({ images }: { images: Image[] }) => {
           />
         </svg>
       </PrevBtn>
-      <NextBtn onClick={() => setMoveClass('next')}>
+      <NextBtn
+        onClick={() => {
+          if (moveAuto) handleCheck();
+          setMoveClass('next');
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-8 w-8"
