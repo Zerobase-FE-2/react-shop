@@ -33,7 +33,7 @@ export default function Navbar() {
     return acc;
   },0)
   const NavBar = tw.nav`
-  w-full h-16 p-2 bg-white dark:bg-gray-900 flex justify-between shadow-lg sticky
+  w-full h-16 p-2 bg-white dark:bg-gray-900 flex justify-between shadow-lg sticky z-40
   `
   const LeftBar = tw.div`
   flex items-center

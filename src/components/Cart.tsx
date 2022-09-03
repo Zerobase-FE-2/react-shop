@@ -48,7 +48,7 @@ export default function Cart() {
         return total;
     }
     const Cart= tw.section`
-    relative flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
+    flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
     `
     const CartItems = tw.section`
     flex flex-col
