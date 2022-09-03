@@ -6,31 +6,24 @@ type Image = {
   title?: string;
   description?: string;
 };
-
-const Slider = ({ images }: { images: Image[] }) => {
-  const SliderSection = tw.section`
+const SliderSection = tw.section`
 w-full relative overflow-x-hidden slidersection
 `;
-  const SliderList = tw.ul`
- relative flex slider
+
+const SliderList = tw.ul` relative flex slider 
 `;
-  const NextBtn = tw.button`
+
+const NextBtn = tw.button`
   absolute h-full w-8 top-0 right-0  bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
 
-  const PrevBtn = tw.button`
+const PrevBtn = tw.button`
 absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
 
+const Slider = ({ images }: { images: Image[] }) => {
   const [moveClass, setMoveClass] = useState('');
   const [carouselItems, setCarouselItems] = useState<Image[]>(images);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--num',
-      carouselItems.length.toString()
-    );
-  }, [carouselItems]);
 
   const handleAnimationEnd = () => {
     if (moveClass === 'prev') {

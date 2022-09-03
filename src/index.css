@@ -23,13 +23,13 @@
 }
 
 .prev {
-  animation-duration: 0.3s;
+  animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: prev;
 }
 
 .next {
-  animation-duration: 0.3s;
+  animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: next;
 }
