@@ -32,6 +32,7 @@ export default function Cart() {
     const [cart, setCart] = useState(data);
     const [popUp, setPopUp] = useState(false);
 
+    const [cart, setCart] = useState(data || []);
     const removeFromCart = (id : number) => {
         const temp = cart.filter((product : product) => product.id !== id);
         setCart(temp);

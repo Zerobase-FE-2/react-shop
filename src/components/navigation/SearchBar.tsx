@@ -89,7 +89,6 @@ export default function SearchBar() {
       </SearchContainer>
      );
 }
-
 // import React from 'react'
 // // import Header from './Header';
 
