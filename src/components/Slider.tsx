@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
+import useInterval from '../hooks/useInterval';
 
 type Image = {
   url: string;
@@ -7,75 +8,77 @@ type Image = {
   description?: string;
 };
 
-function useInterval(callback: Function, delay: number) {
-  const savedCallback = useRef<Function>();
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    function tick() {
-      if (savedCallback.current) {
-        savedCallback.current();
-      }
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-const Slider = ({
-  images,
-  totalSlides = 5,
-}: {
-  images: Image[];
-  totalSlides: number;
-}) => {
-  const SliderSection = tw.section`
-block w-full relative
+const delay = 5000;
+const SliderSection = tw.section`
+w-full relative overflow-x-hidden slidersection
 `;
-  const SliderList = tw.ul`
-  relative flex 
+
+const SliderList = tw.ul` relative flex slider 
 `;
-  const NextBtn = tw.button`
-  absolute h-full w-8 top-0 right-0  bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200`;
-  const PrevBtn = tw.button`
-absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200`;
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const slideRef = useRef<HTMLUListElement>(null);
-  const intervalTime = 3000;
+const NextBtn = tw.button`
+  absolute h-full w-8 top-0 right-0  bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
+`;
 
-  useEffect(() => {
-    if (slideRef.current) {
-      slideRef.current.style.transition = 'all 0.5s ease-in-out';
-      slideRef.current.style.transform = `translateX(-${currentIndex}00%)`;
+const PrevBtn = tw.button`
+absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
+`;
+
+const Slider = ({ images }: { images: Image[] }) => {
+  const [moveClass, setMoveClass] = useState('');
+  const [moveAuto, setMoveAuto] = useState(true);
+  const [carouselItems, setCarouselItems] = useState<Image[]>(images);
+
+  const handleAnimationEnd = () => {
+    if (moveClass === 'prev') {
+      shiftNext([...carouselItems]);
+    } else if (moveClass === 'next') {
+      shiftPrev([...carouselItems]);
     }
-  }, [currentIndex]);
+    setMoveClass('');
+  };
 
-  const prevSlide = () => {
-    if (currentIndex - 1 < 0) setCurrentIndex(totalSlides - 1);
-    else {
-      setCurrentIndex((currentIndex) => (currentIndex - 1) % totalSlides);
+  const shiftPrev = (copy: Image[]) => {
+    let lastcard = copy.pop();
+    if (lastcard) {
+      copy.splice(0, 0, lastcard);
+      setCarouselItems(copy);
     }
   };
 
-  const nextSlide = () => {
-    console.log('next', currentIndex);
-    setCurrentIndex((currentIndex) => (currentIndex + 1) % totalSlides);
+  useInterval(
+    () => {
+      setMoveClass('next');
+    },
+    moveAuto ? delay : null
+  );
+
+  const shiftNext = (copy: Image[]) => {
+    let firstcard = copy.shift();
+    if (firstcard) {
+      copy.splice(copy.length, 0, firstcard);
+      setCarouselItems(copy);
+    }
   };
 
-  useInterval(nextSlide, intervalTime);
+  const handleCheck = () => {
+    setMoveAuto(!moveAuto);
+  };
 
   return (
-    <SliderSection>
-      <SliderList ref={slideRef}>
-        {images.map((image, index) => (
-          <li className="relative min-w-full flex">
+    <SliderSection
+      onMouseEnter={() => {
+        if (moveAuto) handleCheck();
+      }}
+    >
+      <SliderList
+        className={`${moveClass}`}
+        onAnimationEnd={handleAnimationEnd}
+      >
+        {carouselItems.map((image, index) => (
+          <li className="relative min-w-full" key={index}>
             <img src={image.url} alt={`${image.title}`} />
-            <div className="absolute top-[42%] left-[5%]">
+            <div className="absolute top-[40%] left-[5%]">
               <p className="font-bold text-6xl">{image.title}</p>
               <p className="text-4xl">{image.description}</p>
               <button className="btn btn-md mt-3 text-lg">
@@ -97,7 +100,25 @@ absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opaci
           </li>
         ))}
       </SliderList>
-      <PrevBtn onClick={prevSlide}>
+      <label
+        htmlFor="default-toggle"
+        className="inline-flex absolute top-10 right-10 items-center cursor-pointer "
+      >
+        <input
+          type="checkbox"
+          checked={moveAuto}
+          id="default-toggle"
+          className="sr-only peer"
+          onChange={handleCheck}
+        />
+        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      </label>
+      <PrevBtn
+        onClick={() => {
+          if (moveAuto) handleCheck();
+          setMoveClass('prev');
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-8 w-8"
@@ -111,7 +132,12 @@ absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opaci
           />
         </svg>
       </PrevBtn>
-      <NextBtn onClick={nextSlide}>
+      <NextBtn
+        onClick={() => {
+          if (moveAuto) handleCheck();
+          setMoveClass('next');
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-8 w-8"

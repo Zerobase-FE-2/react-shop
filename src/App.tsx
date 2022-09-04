@@ -14,7 +14,8 @@ import AccessoryPage from './components/productShow/AccessoryPage';
 import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
-// import { store } from './store/store'
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 function App() {
   const dispatch = useDispatch();
