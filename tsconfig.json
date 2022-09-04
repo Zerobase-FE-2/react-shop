@@ -18,5 +18,7 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
+  "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
+  "skipLibCheck": true,
   "references": [{ "path": "./tsconfig.node.json" }]
 }
