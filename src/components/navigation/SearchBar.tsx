@@ -3,70 +3,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
-const SearchContainer = styled.div`
-  display: inline;
-  float: right;
-  top: 5px;
-  right: 20px;
-  width: 400px;
-  height: 40px;
-  position: relative;
-  border: 0;
-`;
-
-const Search = styled.input`
-  border: 0;
-  padding-left: 10px;
-  background-color: #eaeaea;
-  width: 100%;
-  height: 100%;
-  outline: none;
-`;
-
-
-const AutoSearchContainer = styled.div`
-  z-index: 3;
-  height: 50vh;
-  width: 400px;
-  background-color: #fff;
-  position: absolute;
-  top: 40px;
-  border: 0;
-  padding: 5px;
-`;
-
-const AutoSearchWrap = styled.ul`
-  list-style:none;
-  width: 100%;
-  margin: 0px;
-  padding: 10px 0px;
-`;
-
-const AutoSearchData = styled.li`
-  text-align: center;
-  padding: 20px 0px;
-  border: 1px solid black;
-  width: 100%;
-  /* height: 30px; */
-  font-size: 14px;
-  font-weight: bold;
-  z-index: 4;
-  letter-spacing: 2px;
-  &:hover {
-    background-color: #edf5f5;
-    cursor: pointer;
-  }
-  position: relative;
-  img {
-    position: absolute;
-    right: 5px;
-    width: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-`;
 interface autoDatas {
   id: number;
   title: string;
@@ -79,6 +17,21 @@ interface autoDatas {
       count: number;
   }
 }
+const SearchContainer = tw.div`
+flex items-center
+`
+const Search = tw.input`
+hidden md:block absolute md:static top-16 left-0 w-full md:w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
+`
+const AutoCompleteContainer = tw.div`
+absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-auto p-1 bg-white dark:bg-gray-700 shadow-xl
+`
+const SearchedList = tw.ul`
+w-screen md:w-full h-fit
+`
+const SearchedItem = tw.li`
+p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
+`
 export default function SearchBar() {
 	const [keyword, setKeyword] = useState<string>("");
     const [keyItems, setKeyItems] = useState<autoDatas[]>([]);
@@ -119,51 +72,23 @@ export default function SearchBar() {
     },[keyword]) //키워드가 변경되면 api를 호출
     return (
     <SearchContainer>
-     <Search value={keyword} onChange={onChangeData}/>
-       {keyItems.length > 0 && keyword && (
-        <AutoSearchContainer>
-         <AutoSearchWrap>
+      <Search value={keyword} placeholder='검색' onChange={onChangeData}/>
+      {keyItems.length > 0 && keyword && (
+        <AutoCompleteContainer>
+         <SearchedList>
           {keyItems.map((search) => (
-              <LinkReset>
-            <Link to={`${search.id}`} key={search.title}>
-              <AutoSearchData
-                onClick={() => {
-                  setKeyword("");
-                }}
-                >
-                {search.title}
-              </AutoSearchData>
-            </Link>
-                </LinkReset>
+              <Link to={`${search.id}`} key={search.title}>
+                <SearchedItem onClick={() => {setKeyword("")}}>
+                  {search.title}
+                </SearchedItem>
+              </Link>
           ))}
-         </AutoSearchWrap>
-        </AutoSearchContainer>
-       )}
+         </SearchedList>
+        </AutoCompleteContainer>
+      )}
       </SearchContainer>
      );
 }
-
-const LinkReset = styled.div`
-  a:link {
-    color : black;
-    text-decoration: none;
-  }
-  a:visited {
-    color : black;
-    text-decoration: none;
-  }
-  a:hover {
-    color : black;
-    background-color: grey;
-    text-decoration: none;
-  }
-  a:active {
-    color : black;
-    text-decoration: none;
-  }
-`
-
-
 // import React from 'react'
 // // import Header from './Header';
 

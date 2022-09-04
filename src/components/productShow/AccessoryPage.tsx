@@ -1,11 +1,19 @@
-import React from 'react'
 import ProductsTable from './ProductsTable'
+import tw from 'tailwind-styled-components'
+import BreadCrumb from '../navigation/BreadCrumb'
 
 export default function AccessoryPage() {
+
+  const Title = tw.h1`
+  text-3xl font-bold pb-6 text-center text-black dark:text-white
+  `
+
   return (
-    <div style={{display: "block", width:"100%", height:"100%"}}>
-      <div>홈 {">"} 악세서리</div>
-      <h1 style={{textAlign:"center"}}>악세서리</h1>
+    <div className='h-fit lg:min-h-screen bg-white h-screen dark:bg-gray-800'>
+      <div className='p-4'>
+        <BreadCrumb />
+      </div>
+      <Title>악세서리</Title>
       <ProductsTable category={"accessory"}/>
     </div>
   )

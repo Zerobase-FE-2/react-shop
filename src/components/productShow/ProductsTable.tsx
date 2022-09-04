@@ -1,6 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import tw from 'tailwind-styled-components'
 // import { filteritem } from '../actions';
 
 export default function ProductsTable(props:any) {
@@ -35,18 +35,16 @@ export default function ProductsTable(props:any) {
   // console.log("sss"+filtering(category));
   // let array = calledItems;
   return (
-    <div>
+    <div className='flex flex-wrap justify-center'>
       {filtering(category, catego).map((doc:any) => (
-        <div key={doc.id} style={{display: "inline-block", margin:"10px", width:"300px", height:"500px", backgroundColor:"grey", border:"1px solid grey", borderRadius:"15px"}}>
+        <div key={doc.id} className='w-full md:w-1/3 lg:w-1/5 m-2 shrink-0 border dark:border-none rounded-lg'>
           <Link to={`/${doc.id}`}>
-            <div style={{display: "block", width:"300px", height:"300px", backgroundColor:"white", borderRadius:"14px 14px 0px 0px"}}>
-              <img src={doc.image} className="logo" alt="itemimg" style={{margin:"75px", width:"150px", height:"150px"}} />
-            </div>
-            <div style={{display: "block", margin:"10px", width:"280px", height:"125px"}}>
-            {doc.title}
-            </div>
-            <div style={{display: "block", width:"300px", height:"75px", borderRadius:"0px 0px 14px 14px"}}>
-            ${doc.price}
+            <figure className='h-80 bg-white flex justify-center items-center dark:rounded-t-lg'>
+              <img src={doc.image} className="img-primary" alt={doc.title}/>
+            </figure>
+            <div className='h-36 text-black dark:text-gray-400 bg-gray-200 dark:bg-gray-700 flex flex-col p-4 justify-between items-start dark:rounded-b-lg overflow-auto'>
+              <span className='text-start font-semibold'>{doc.title}</span>
+              <span className='font-semibold'>${doc.price}</span>
             </div>
           </Link>
         </div>

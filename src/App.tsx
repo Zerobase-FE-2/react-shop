@@ -17,7 +17,6 @@ import Cart from './components/Cart';
 // import { store } from './store/store'
 
 function App() {
-
   const dispatch = useDispatch();
   const productListApi = 'https://fakestoreapi.com/products';
   async function fetcher(url:string){
@@ -30,8 +29,6 @@ function App() {
   
   if(error) return <div>failed to load</div>;
   if(!docs) return <div>Loading...</div>;
-
-  
   dispatch(act.callapi(docs));
   // const something = useSelector(state => state);
   const something = dispatch(act.callapi(docs));;

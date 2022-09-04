@@ -1,11 +1,19 @@
-import React from 'react'
 import ProductsTable from './ProductsTable'
+import tw from 'tailwind-styled-components'
+import BreadCrumb from '../navigation/BreadCrumb'
 
 export default function DigitalPage() {
+
+  const Title = tw.h1`
+  text-3xl font-bold pb-6 text-center text-black dark:text-white
+  `
+
   return (
-    <div style={{display: "block", width:"100%", height:"100%"}}>
-      <div>홈 {">"} 디지털</div>
-      <h1 style={{textAlign:"center"}}>디지털</h1>
+    <div className='h-fit lg:min-h-screen bg-white dark:bg-gray-800'>
+      <div className='p-4'>
+        <BreadCrumb />
+      </div>
+      <Title>디지털</Title>
       <ProductsTable category={"digital"}/>
     </div>
   )

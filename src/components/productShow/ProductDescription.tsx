@@ -1,11 +1,13 @@
-import React from 'react';
 import { useParams } from 'react-router';
-import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import BreadCrumb from '../navigation/BreadCrumb';
 
 export default function ProductDescription() {
   const params = useParams();
+  const dispatch = useDispatch();
   // const {category} = props;
   const calledItems = useSelector((state:any) => state.itemList);
 
@@ -40,64 +42,39 @@ export default function ProductDescription() {
   // if(!docs) return <div>Loading...</div>;
 
   // console.log(itemList);
-
+  const Product = tw.div`
+  flex flex-col min-h-screen lg:flex-row px-10 pt-16 bg-white dark:bg-gray-800
+  `
   return (
     <>
       {/* <div>ProductDescription{params.docId}</div> */}
       {/* <div>{location} {" > "} {itemList[Number(params.docId) - 1].title}</div> */}
-      <div>{firstLocation} {" > "} {selectedItem.title}</div>
+      <div className='bg-white dark:bg-gray-800 p-4'><BreadCrumb category={selectedItem.category} title={selectedItem.title} /></div>
       {/* {itemList.filter((item:any) => item.id === Number(params.docId)).map((doc:any) => ( */}
-        <div key={params.docId} style={{display: "flex", margin:"10px", width:"1344px", height:"320px", backgroundColor:"grey"}}>
-            
-            <div style={{display: "inline-block", width:"300px", height:"300px", backgroundColor:"white"}}>
-              <img src={selectedItem.image} className="logo" alt="itemimg" style={{margin:"75px", width:"150px", height:"150px"}} />
-            </div>
-
-            <ItemDescriptionWrap>
-              <ItemTitle>
+        <Product key={params.docId}>
+            <figure className='w-full h-80 lg:w-96 bg-white p-4 pb-4 lg:mb-0 rounded-2xl'>
+              <img src={selectedItem.image} className="img-primary w-full h-72" alt={selectedItem.title} />
+            </figure>
+            <div className='w-full lg:px-8 flex flex-col'>
+              <h1 className='lg:pb-4 text-2xl font-bold text-black dark:text-gray-400'>
                 {selectedItem.title}
-              </ItemTitle>
-              <ItemInfo>
+              </h1>
+              <p className='py-4 lg:py-0 text-black dark:text-gray-400'>
                 {selectedItem.description}
-              </ItemInfo>
-              <ItemInfo>
+              </p>
+              <div className='py-0 lg:py-4'>
                 {selectedItem.rating.rate}/{selectedItem.rating.count}
-              </ItemInfo>
-              <ItemInfo>
+              </div>
+              <p className='text-xl font-semibold py-4 lg:py-0 text-black dark:text-gray-400'>
                 ${selectedItem.price}
-              </ItemInfo>
-              <Shopbutton>장바구니에 담기</Shopbutton>
-              <Shopbutton><Link to='/cart'>장바구니로 이동</Link></Shopbutton>
-            </ItemDescriptionWrap>
-        </div>
+              </p>
+              <div className='py-0 lg:py-4'>
+                <button className='btn-primary mr-4' onClick={() => dispatch({type : "ADD", payload : {id : selectedItem.id, count : 1}})}>장바구니에 담기</button>
+                <button className='btn-primary text-black dark:text-white bg-inherit border-solid border-2 border-black dark:border-gray-100 hover:text-white hover:bg-black hover:border-black dark:hover:bg-gray-500 dark:hover:border-gray-500'><Link to='/cart'>장바구니로 이동</Link></button>
+              </div>
+            </div>
+        </Product>
        {/* ))} */}
     </>
   )
-
-
 }
-
-const ItemDescriptionWrap = styled.div`
-  display: inline-block;
-  margin: 10px;
-  width: 950px;
-`
-
-const ItemTitle = styled.h3`
-  display: block;
-  margin: 10px;
-  width: 950px;
-`
-
-const ItemInfo = styled.div`
-  display: block;
-  margin: 10px;
-  width: 950px;
-`
-
-const Shopbutton = styled.button`
-  display: inline-block;
-  margin: 10px;
-  width: 120px;
-  height: 40px;
-`
