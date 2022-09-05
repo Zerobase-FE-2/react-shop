@@ -1,11 +1,11 @@
-import Slider from './Slider';
+import Slider2 from './Slider2';
 import vegetableImg from '../assets/images/vegetables.jpeg';
 import shopImg from '../assets/images/shop.jpeg';
 import jeanImg from '../assets/images/jeans.jpeg';
 
 const Index = () => {
   return (
-    <Slider
+    <Slider2
       images={[
         {
           url: vegetableImg,
