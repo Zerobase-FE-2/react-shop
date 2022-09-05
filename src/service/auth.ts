@@ -9,13 +9,15 @@ import {
   signOut,
 } from 'firebase/auth';
 import { SetStateAction } from 'react';
-type email = string;
-type password = string;
 
-export const signUp = async (email: email, password: password) => {
+interface IAccount {
+  readonly email: string;
+  readonly password: string;
+}
+
+export const signUp = async ({ email, password }: IAccount) => {
   await createUserWithEmailAndPassword(authService, email, password)
     .then((userCredential) => {
-      //signed In
       const user = userCredential.user;
     })
     .catch((error) => {
@@ -25,7 +27,7 @@ export const signUp = async (email: email, password: password) => {
     });
 };
 
-export const signIn = async (email: email, password: password) => {
+export const signIn = async ({ email, password }: IAccount) => {
   await signInWithEmailAndPassword(authService, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -44,9 +46,7 @@ export const signIn = async (email: email, password: password) => {
 export const logOut = async () => {
   alert('로그아웃 되었습니다.');
   await signOut(authService)
-    .then(() => {
-      //signOut successful
-    })
+    .then(() => {})
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;

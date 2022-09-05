@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import useInterval from '../hooks/useInterval';
 
-type Image = {
+interface IImage {
   url: string;
   title?: string;
   description?: string;
-};
+}
 
 const delay = 5000;
 const SliderSection = tw.section`
 w-full relative overflow-x-hidden slidersection
 `;
 
-const SliderList = tw.ul` relative flex slider 
+const SliderList = tw.ul` relative flex slider
 `;
 
 const NextBtn = tw.button`
@@ -24,10 +24,10 @@ const PrevBtn = tw.button`
 absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
 
-const Slider = ({ images }: { images: Image[] }) => {
+const Slider = ({ images }: { images: IImage[] }) => {
   const [moveClass, setMoveClass] = useState('');
   const [moveAuto, setMoveAuto] = useState(true);
-  const [carouselItems, setCarouselItems] = useState<Image[]>(images);
+  const [carouselItems, setCarouselItems] = useState<IImage[]>(images);
 
   const handleAnimationEnd = () => {
     if (moveClass === 'prev') {
@@ -38,7 +38,7 @@ const Slider = ({ images }: { images: Image[] }) => {
     setMoveClass('');
   };
 
-  const shiftPrev = (copy: Image[]) => {
+  const shiftPrev = (copy: IImage[]) => {
     let lastcard = copy.pop();
     if (lastcard) {
       copy.splice(0, 0, lastcard);
@@ -53,7 +53,7 @@ const Slider = ({ images }: { images: Image[] }) => {
     moveAuto ? delay : null
   );
 
-  const shiftNext = (copy: Image[]) => {
+  const shiftNext = (copy: IImage[]) => {
     let firstcard = copy.shift();
     if (firstcard) {
       copy.splice(copy.length, 0, firstcard);

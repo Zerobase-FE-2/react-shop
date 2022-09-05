@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
 
-
 import * as AuthService from '../service/auth';
 
 interface SignUpInputs {
@@ -41,10 +40,9 @@ const SignUp = () => {
   } = useForm<SignUpInputs>();
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data, e) => {
-    const { email, password } = data;
     try {
       e?.target.reset();
-      await AuthService.signUp(email, password);
+      await AuthService.signUp(data);
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
@@ -90,7 +88,9 @@ const SignUp = () => {
         >
           <input type="hidden" name="remember" defaultValue="true" />
           <div>
-            <label className='text-black dark:text-gray-400' htmlFor="email">Email</label>
+            <label className="text-black dark:text-gray-400" htmlFor="email">
+              Email
+            </label>
             <Input
               type="email"
               placeholder="What is your email"
@@ -99,7 +99,9 @@ const SignUp = () => {
             <Error>{errors.email?.message}</Error>
           </div>
           <div>
-            <label className='text-black dark:text-gray-400' htmlFor="password">Password</label>
+            <label className="text-black dark:text-gray-400" htmlFor="password">
+              Password
+            </label>
             <Input
               {...register('password', { required: true })}
               type="password"
@@ -109,7 +111,12 @@ const SignUp = () => {
             <Error>{errors.password?.message}</Error>
           </div>
           <div>
-            <label className='text-black dark:text-gray-400' htmlFor="passwordCheck">Check Password</label>
+            <label
+              className="text-black dark:text-gray-400"
+              htmlFor="passwordCheck"
+            >
+              Check Password
+            </label>
             <Input
               {...register('confirm_password', {
                 required: true,
@@ -126,7 +133,12 @@ const SignUp = () => {
           </div>
           <br />
           <div>
-            <label className='text-black dark:text-gray-400' htmlFor="passwordCheck">name</label>
+            <label
+              className="text-black dark:text-gray-400"
+              htmlFor="passwordCheck"
+            >
+              name
+            </label>
             <Input
               {...register('name', {
                 required: true,
@@ -137,7 +149,12 @@ const SignUp = () => {
             <Error>{errors.name?.message}</Error>
           </div>
           <div>
-            <label className='text-black dark:text-gray-400' htmlFor="passwordCheck">age</label>
+            <label
+              className="text-black dark:text-gray-400"
+              htmlFor="passwordCheck"
+            >
+              age
+            </label>
             <Input
               {...register('name', {
                 required: true,

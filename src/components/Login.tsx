@@ -43,10 +43,9 @@ const Login = () => {
   } = useForm<LogInInputs>();
 
   const onSubmit: SubmitHandler<LogInInputs> = async (data, e) => {
-    const { email, password } = data;
     try {
       e?.target.reset();
-      await AuthService.signIn(email, password);
+      await AuthService.signIn(data);
     } catch (error) {
       if (typeof error == 'string') {
         alert(error);
