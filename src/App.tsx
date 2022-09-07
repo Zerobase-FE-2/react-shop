@@ -14,6 +14,7 @@ import AccessoryPage from './components/productShow/AccessoryPage';
 import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
