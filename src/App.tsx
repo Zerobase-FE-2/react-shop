@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import * as act from './actions';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -18,19 +18,19 @@ import Cart from './components/Cart';
 function App() {
   const dispatch = useDispatch();
   const productListApi = 'https://fakestoreapi.com/products';
-  async function fetcher(url:string){
-    const result = await axios.get(url)
-    
+  async function fetcher(url: string) {
+    const result = await axios.get(url);
+
     // console.log(result.data);
     return result.data;
   }
-  const {data: docs, error} = useSWR('post', () => fetcher(productListApi));
-  
-  if(error) return <div>failed to load</div>;
-  if(!docs) return <div>Loading...</div>;
+  const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
+
+  if (error) return <div>failed to load</div>;
+  if (!docs) return <div>Loading...</div>;
   dispatch(act.callapi(docs));
   // const something = useSelector(state => state);
-  const something = dispatch(act.callapi(docs));;
+  const something = dispatch(act.callapi(docs));
   console.log(something);
 
   return (
@@ -45,7 +45,7 @@ function App() {
           <Route path="/:docId" element={<ProductDescription />} />
           <Route path="/cart" element={<Cart />} />
           {/* <Route path="/" element={<Index />} /> */}
-        <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
         </Route>
       </Routes>
     </BrowserRouter>

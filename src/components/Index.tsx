@@ -8,17 +8,17 @@ const Index = () => {
     <Slider
       images={[
         {
-          url:  vegetableImg,
+          url: vegetableImg,
           title: 'hihi',
           description: 'hello',
         },
         {
-          url: shopImg ,
+          url: shopImg,
           title: 'hihi',
           description: 'hello',
         },
         {
-          url: jeanImg ,
+          url: jeanImg,
           title: 'hihi',
           description: 'hello',
         },

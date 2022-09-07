@@ -38,6 +38,14 @@ const Slider = ({ images }: { images: Image[] }) => {
     setMoveClass('');
   };
 
+  const shiftNext = (copy: Image[]) => {
+    let firstcard = copy.shift();
+    if (firstcard) {
+      copy.splice(copy.length, 0, firstcard);
+      setCarouselItems(copy);
+    }
+  };
+
   const shiftPrev = (copy: Image[]) => {
     let lastcard = copy.pop();
     if (lastcard) {
@@ -53,16 +61,35 @@ const Slider = ({ images }: { images: Image[] }) => {
     moveAuto ? delay : null
   );
 
-  const shiftNext = (copy: Image[]) => {
-    let firstcard = copy.shift();
-    if (firstcard) {
-      copy.splice(copy.length, 0, firstcard);
-      setCarouselItems(copy);
-    }
-  };
-
   const handleCheck = () => {
     setMoveAuto(!moveAuto);
+  };
+
+  const SliderImage = ({ url, title, description }: Image) => {
+    return (
+      <li className="relative min-w-full">
+        <img src={url} alt={`${title}`} />
+        <div className="absolute top-[40%] left-[5%]">
+          <p className="font-bold text-6xl">{title}</p>
+          <p className="text-4xl">{description}</p>
+          <button className="btn btn-md mt-3 text-lg">
+            바로가기
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 ml-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </li>
+    );
   };
 
   return (
@@ -76,28 +103,12 @@ const Slider = ({ images }: { images: Image[] }) => {
         onAnimationEnd={handleAnimationEnd}
       >
         {carouselItems.map((image, index) => (
-          <li className="relative min-w-full" key={index}>
-            <img src={image.url} alt={`${image.title}`} />
-            <div className="absolute top-[40%] left-[5%]">
-              <p className="font-bold text-6xl">{image.title}</p>
-              <p className="text-4xl">{image.description}</p>
-              <button className="btn btn-md mt-3 text-lg">
-                바로가기
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 ml-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </li>
+          <SliderImage
+            url={image.url}
+            title={image.title}
+            description={image.description}
+            key={index}
+          />
         ))}
       </SliderList>
       <label
