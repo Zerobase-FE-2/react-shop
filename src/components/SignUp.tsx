@@ -4,6 +4,7 @@ import githubIcon from '../assets/icon/iconGithub.svg';
 import googleIcon from '../assets/icon/iconGoogle.svg';
 
 import * as AuthService from '../service/auth';
+import React, { useCallback } from 'react';
 
 interface SignUpInputs {
   email: string;
@@ -13,25 +14,25 @@ interface SignUpInputs {
   age: number;
 }
 
+const SignupSection = tw.section`
+min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800
+`;
+const SignupTitle = tw.h2`
+mt-6 text-center text-3xl font-extrabold text-black dark:text-gray-400
+`;
+
+const Input = tw.input`
+appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-black rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
+`;
+const Error = tw.p`
+text-red-500
+`;
+
+const SignUpBtn = tw.button`
+group relative  py-2 px-4  w-full flex justify-center  border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+`;
+
 const SignUp = () => {
-  const SignupSection = tw.section`
-  min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800
-  `;
-  const SignupTitle = tw.h2`
-  mt-6 text-center text-3xl font-extrabold text-black dark:text-gray-400
-  `;
-
-  const Input = tw.input`
-  appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-black rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
-  `;
-  const Error = tw.p`
-  text-red-500
-  `;
-
-  const SignUpBtn = tw.button`
-  group relative  py-2 px-4  w-full flex justify-center  border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-  `;
-
   const {
     register,
     watch,
@@ -39,7 +40,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<SignUpInputs>();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data, e) => {
+  const onSubmit: SubmitHandler<SignUpInputs> = useCallback(async (data, e) => {
     const { email, password } = data;
     try {
       e?.target.reset();
@@ -51,9 +52,9 @@ const SignUp = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
-  const handleGoogle = async () => {
+  const handleGoogle = useCallback(async () => {
     try {
       await AuthService.googleSignIn();
     } catch (error) {
@@ -63,9 +64,9 @@ const SignUp = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
-  const handleGithub = async () => {
+  const handleGithub = useCallback(async () => {
     try {
       await AuthService.githubSignIn();
     } catch (error) {
@@ -75,7 +76,7 @@ const SignUp = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
   return (
     <SignupSection>
@@ -186,4 +187,4 @@ const SignUp = () => {
     </SignupSection>
   );
 };
-export default SignUp;
+export default React.memo(SignUp);

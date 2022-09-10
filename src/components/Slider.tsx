@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import useInterval from '../hooks/useInterval';
 
-type Image = {
+interface IImage {
   url: string;
   title?: string;
   description?: string;
-};
+}
 
 const delay = 5000;
+
 const SliderSection = tw.section`
 w-full relative overflow-x-hidden slidersection
 `;
@@ -24,35 +25,41 @@ const PrevBtn = tw.button`
 absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
 
-const Slider = ({ images }: { images: Image[] }) => {
+const Slider = ({ images }: { images: IImage[] }) => {
   const [moveClass, setMoveClass] = useState('');
   const [moveAuto, setMoveAuto] = useState(true);
-  const [carouselItems, setCarouselItems] = useState<Image[]>(images);
+  const [carouselItems, setCarouselItems] = useState<IImage[]>(images);
 
-  const handleAnimationEnd = () => {
+  const handleAnimationEnd = useCallback(() => {
     if (moveClass === 'prev') {
       shiftNext([...carouselItems]);
     } else if (moveClass === 'next') {
       shiftPrev([...carouselItems]);
     }
     setMoveClass('');
-  };
+  }, [moveClass]);
 
-  const shiftNext = (copy: Image[]) => {
-    let firstcard = copy.shift();
-    if (firstcard) {
-      copy.splice(copy.length, 0, firstcard);
-      setCarouselItems(copy);
-    }
-  };
+  const shiftNext = useCallback(
+    (copy: IImage[]) => {
+      let firstcard = copy.shift();
+      if (firstcard) {
+        copy.splice(copy.length, 0, firstcard);
+        setCarouselItems(copy);
+      }
+    },
+    [carouselItems]
+  );
 
-  const shiftPrev = (copy: Image[]) => {
-    let lastcard = copy.pop();
-    if (lastcard) {
-      copy.splice(0, 0, lastcard);
-      setCarouselItems(copy);
-    }
-  };
+  const shiftPrev = useCallback(
+    (copy: IImage[]) => {
+      let lastcard = copy.pop();
+      if (lastcard) {
+        copy.splice(0, 0, lastcard);
+        setCarouselItems(copy);
+      }
+    },
+    [carouselItems]
+  );
 
   useInterval(
     () => {
@@ -61,11 +68,11 @@ const Slider = ({ images }: { images: Image[] }) => {
     moveAuto ? delay : null
   );
 
-  const handleCheck = () => {
+  const handleCheck = useCallback(() => {
     setMoveAuto(!moveAuto);
-  };
+  }, [moveAuto]);
 
-  const SliderImage = ({ url, title, description }: Image) => {
+  const SliderImage = useCallback(({ url, title, description }: IImage) => {
     return (
       <li className="relative min-w-full">
         <img src={url} alt={`${title}`} />
@@ -90,7 +97,7 @@ const Slider = ({ images }: { images: Image[] }) => {
         </div>
       </li>
     );
-  };
+  }, []);
 
   return (
     <SliderSection
@@ -166,4 +173,4 @@ const Slider = ({ images }: { images: Image[] }) => {
   );
 };
 
-export default Slider;
+export default React.memo(Slider);
