@@ -9,7 +9,7 @@ export default function AccessoryPage() {
   `
 
   return (
-    <div className='h-fit lg:min-h-screen bg-white h-screen dark:bg-gray-800'>
+    <div className='min-h-full bg-white dark:bg-gray-800'>
       <div className='p-4'>
         <BreadCrumb />
       </div>

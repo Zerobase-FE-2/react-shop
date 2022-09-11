@@ -14,6 +14,7 @@ import AccessoryPage from './components/productShow/AccessoryPage';
 import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
+import ScrollToTop from './components/function/ScrollToTop';
 // import { store } from './store/store'
 
 function App() {
@@ -37,8 +38,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navbar />}>
+      <ScrollToTop>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/fasion" element={<FashionPage />} />
@@ -47,9 +49,10 @@ function App() {
           <Route path="/:docId" element={<ProductDescription />} />
           <Route path="/cart" element={<Cart />} />
           {/* <Route path="/" element={<Index />} /> */}
-        <Route path="/signup" element={<SignUp />} />
-        </Route>
-      </Routes>
+          <Route path="/signup" element={<SignUp />} />
+          </Route>
+        </Routes>
+      </ScrollToTop>
     </BrowserRouter>
   );
 }

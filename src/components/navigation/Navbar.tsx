@@ -45,7 +45,7 @@ export default function Navbar() {
   text-black dark:text-white text-lg md:text-base lg:text-xl font-bold px-3 py-1
   `
   const NavBtn = tw.div`
-  relative text-black dark:text-white hidden md:block md:text-sm lg:text-base font-semibold px-2 py-2 mx-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-lg
+  relative text-black dark:text-white hidden md:block md:text-sm lg:text-base font-semibold p-2 mx-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-lg
   `
   const MenuBtn = tw.div`
   relative text-black dark:text-white block md:hidden md:text-sm lg:text-base font-semibold px-1 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-lg
@@ -63,7 +63,6 @@ export default function Navbar() {
           <Link to='/fasion'><NavBtn>패션</NavBtn></Link>
           <Link to='/accessory'><NavBtn>악세서리</NavBtn></Link>
           <Link to='/digital'><NavBtn>디지털</NavBtn></Link>
-          <Link to='/login'><NavBtn>로그인</NavBtn></Link>
       </LeftBar>
       <RightBar>
           <NavBtn className="block" onClick={() => {
@@ -86,6 +85,11 @@ export default function Navbar() {
               <ShoppingBagIcon className='w-7 h-7 mx-2' />
               <CartCount className="blcok">{count}</CartCount>
             </NavBtn>
+          </Link>
+          <Link to='/login'>
+            <div className='relative text-black dark:text-white md:text-sm lg:text-base font-semibold p-2 mx-2 mt-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-lg'>
+              로그인
+            </div>
           </Link>
       </RightBar>
     </NavBar>
