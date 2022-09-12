@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import SearchBar from './SearchBar';
 import Menu from './Menu';
-import { ShoppingBagIcon, SunIcon, MoonIcon, SearchIcon, MenuIcon } from '@heroicons/react/outline'
+import { ShoppingBagIcon, SunIcon, MoonIcon, SearchIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
 type item = {
   id : number;
@@ -18,13 +18,27 @@ export default function Navbar() {
   const initialMode = useSelector((state : any) => state.mode) 
   const [theme, setTheme] = useState(initialMode || 'light');
   const [menu, setMenu] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
   const colorTheme = theme === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove(colorTheme);
     root.classList.add(theme);
-  },[theme, colorTheme])
+  },[theme, colorTheme]);
+
+  useEffect(() => {
+    const handleWidth = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleWidth);
+    if(width > 768){
+      setMenu(false);
+      setClicked(false);
+    };
+    return(() => {
+      window.removeEventListener('resize', handleWidth);
+    });
+  },[width]);
 
   const condition : item[] = useSelector((state : any) => state.cart);
   const dispatch = useDispatch();
@@ -56,15 +70,30 @@ export default function Navbar() {
   return (
   <>
     <NavBar>
-      {menu && <Menu func={menu} setFunc={setMenu} />}
+      {menu && <Menu menu={menu} clicked={clicked} setMenu={setMenu} setClicked={setClicked} />}
       <LeftBar>
-          <MenuBtn><MenuIcon className='w-7 h-7 mx-2' onClick={() => setMenu(!menu)} /></MenuBtn>
+          <MenuBtn>
+            {
+              clicked === false 
+                ? <MenuIcon className='w-7 h-7 mx-2' onClick={() => {
+                  setMenu(!menu);
+                  setClicked(!clicked);
+                }} />
+                : <XIcon className='w-7 h-7 mx-2' onClick={() => {
+                  setMenu(!menu);
+                  setClicked(!clicked);
+                }} />
+            }
+          </MenuBtn>
           <Link to='/'><HomeBtn>React Shop</HomeBtn></Link>
           <Link to='/fasion'><NavBtn>패션</NavBtn></Link>
           <Link to='/accessory'><NavBtn>악세서리</NavBtn></Link>
           <Link to='/digital'><NavBtn>디지털</NavBtn></Link>
       </LeftBar>
-      <RightBar>
+      <RightBar onClick={() => {
+        setClicked(false);
+        setMenu(false);
+      }}>
           <NavBtn className="block" onClick={() => {
             setTheme(colorTheme);
             dispatch({type : "CHANGE", payload : colorTheme});
