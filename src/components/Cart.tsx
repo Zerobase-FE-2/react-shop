@@ -28,8 +28,10 @@ export default function Cart() {
     const docs = calledItems.state;
     const data : any = useSelector((state:any) => state.cart);
     const dispatch = useDispatch();
+
+    const [cart, setCart] = useState(data);
     const [popUp, setPopUp] = useState(false);
-    const [cart, setCart] = useState(data || []);
+  
     const removeFromCart = (id : number) => {
         const temp = cart.filter((product : product) => product.id !== id);
         setCart(temp);

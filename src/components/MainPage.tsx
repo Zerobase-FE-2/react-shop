@@ -10,7 +10,7 @@ export default function MainPage() {
 
   return (
     <div>
-      <div id="container" className='w-full'>
+      <div id="container">
         <Index />
           <div className='text-center bg-white dark:bg-gray-800'>
               <Title>패션</Title>
