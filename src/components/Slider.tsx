@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import useInterval from '../hooks/useInterval';
 
-type Image = {
+interface IImage {
   url: string;
   title?: string;
   description?: string;
-};
+}
 
 const delay = 5000;
+
 const SliderSection = tw.section`
 w-full relative overflow-x-hidden slidersection
 `;
@@ -26,27 +27,41 @@ const PrevBtn = tw.button`
 absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
 
-const Slider = ({ images }: { images: Image[] }) => {
+const Slider = ({ images }: { images: IImage[] }) => {
   const [moveClass, setMoveClass] = useState('');
   const [moveAuto, setMoveAuto] = useState(true);
-  const [carouselItems, setCarouselItems] = useState<Image[]>(images);
+  const [carouselItems, setCarouselItems] = useState<IImage[]>(images);
 
-  const handleAnimationEnd = () => {
+  const handleAnimationEnd = useCallback(() => {
     if (moveClass === 'prev') {
       shiftNext([...carouselItems]);
     } else if (moveClass === 'next') {
       shiftPrev([...carouselItems]);
     }
     setMoveClass('');
-  };
+  }, [moveClass]);
 
-  const shiftPrev = (copy: Image[]) => {
-    let lastcard = copy.pop();
-    if (lastcard) {
-      copy.splice(0, 0, lastcard);
-      setCarouselItems(copy);
-    }
-  };
+  const shiftNext = useCallback(
+    (copy: IImage[]) => {
+      let firstcard = copy.shift();
+      if (firstcard) {
+        copy.splice(copy.length, 0, firstcard);
+        setCarouselItems(copy);
+      }
+    },
+    [carouselItems]
+  );
+
+  const shiftPrev = useCallback(
+    (copy: IImage[]) => {
+      let lastcard = copy.pop();
+      if (lastcard) {
+        copy.splice(0, 0, lastcard);
+        setCarouselItems(copy);
+      }
+    },
+    [carouselItems]
+  );
 
   useInterval(
     () => {
@@ -55,17 +70,36 @@ const Slider = ({ images }: { images: Image[] }) => {
     moveAuto ? delay : null
   );
 
-  const shiftNext = (copy: Image[]) => {
-    let firstcard = copy.shift();
-    if (firstcard) {
-      copy.splice(copy.length, 0, firstcard);
-      setCarouselItems(copy);
-    }
-  };
-
-  const handleCheck = () => {
+  const handleCheck = useCallback(() => {
     setMoveAuto(!moveAuto);
-  };
+  }, [moveAuto]);
+
+  const SliderImage = useCallback(({ url, title, description }: IImage) => {
+    return (
+      <li className="relative min-w-full">
+        <img src={url} alt={`${title}`} />
+        <div className="absolute top-[40%] left-[5%]">
+          <p className="font-bold text-6xl">{title}</p>
+          <p className="text-4xl">{description}</p>
+          <button className="btn btn-md mt-3 text-lg">
+            바로가기
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 ml-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </li>
+    );
+  }, []);
 
   return (
     <SliderSection
@@ -78,28 +112,12 @@ const Slider = ({ images }: { images: Image[] }) => {
         onAnimationEnd={handleAnimationEnd}
       >
         {carouselItems.map((image, index) => (
-          <li className="relative min-w-full" key={index}>
-            <img src={image.url} alt={`${image.title}`} />
-            <div className="absolute top-[40%] left-[5%]">
-              <p className="font-bold text-6xl">{image.title}</p>
-              <p className="text-4xl">{image.description}</p>
-              <button className="btn btn-md mt-3 text-lg">
-                바로가기
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 ml-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </li>
+          <SliderImage
+            url={image.url}
+            title={image.title}
+            description={image.description}
+            key={index}
+          />
         ))}
       </SliderList>
       <label
@@ -157,4 +175,4 @@ const Slider = ({ images }: { images: Image[] }) => {
   );
 };
 
-export default Slider;
+export default React.memo(Slider);

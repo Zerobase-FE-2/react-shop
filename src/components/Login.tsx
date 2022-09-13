@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import tw from 'tailwind-styled-components';
 import { Link } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid';
@@ -13,36 +13,36 @@ interface LogInInputs {
   password: string;
 }
 
-const Login = () => {
-  const LoginSection = tw.section`
+const LoginSection = tw.section`
   min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8
   `;
-  const LoginTitle = tw.h2`
+const LoginTitle = tw.h2`
   mt-6 text-center text-3xl font-extrabold text-black dark:text-white
   `;
-  const Input = tw.input`
+const Input = tw.input`
   appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm
   `;
 
-  const SignInBtn = tw.button`
+const SignInBtn = tw.button`
   group relative w-1/2 ml-1 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
   `;
 
-  const SignUpBtn = tw.div`
+const SignUpBtn = tw.div`
   group relative w-1/2 flex mr-1 justify-center  border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
   `;
 
-  const Error = tw.p`
+const Error = tw.p`
   text-red-500
   `;
 
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LogInInputs>();
 
-  const onSubmit: SubmitHandler<LogInInputs> = async (data, e) => {
+  const onSubmit: SubmitHandler<LogInInputs> = useCallback(async (data, e) => {
     const { email, password } = data;
     try {
       e?.target.reset();
@@ -54,9 +54,9 @@ const Login = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
-  const handleGoogle = async () => {
+  const handleGoogle = useCallback(async () => {
     try {
       await AuthService.googleSignIn();
     } catch (error) {
@@ -66,9 +66,9 @@ const Login = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
-  const handleGithub = async () => {
+  const handleGithub = useCallback(async () => {
     try {
       await AuthService.githubSignIn();
     } catch (error) {
@@ -78,7 +78,7 @@ const Login = () => {
         alert((error as Error).message);
       }
     }
-  };
+  }, []);
 
   return (
     <LoginSection>
@@ -150,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default React.memo(Login);

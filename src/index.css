@@ -23,13 +23,13 @@
 }
 
 .prev {
-  animation-duration: 0.6s;
+  animation-duration: 0.3s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: prev;
 }
 
 .next {
-  animation-duration: 0.6s;
+  animation-duration: 0.3s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: next;
 }
@@ -53,10 +53,10 @@
 }
 
 @layer components {
-    .btn-primary {
-        @apply bg-violet-700 rounded-lg px-4 h-12 text-white font-semibold hover:bg-violet-800;
-    }
-    .img-primary {
-        @apply h-48 w-full lg:w-56 object-contain bg-white rounded-lg;
-    }
+  .btn-primary {
+    @apply bg-violet-700 rounded-lg px-4 h-12 text-white font-semibold hover:bg-violet-800;
+  }
+  .img-primary {
+    @apply h-48 w-full lg:w-56 object-contain bg-white rounded-lg;
+  }
 }
