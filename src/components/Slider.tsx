@@ -37,7 +37,7 @@ const Slider = ({
 block w-full relative
 `;
   const SliderList = tw.ul`
-  relative flex 
+  relative flex
 `;
   const NextBtn = tw.button`
   absolute h-full w-8 top-0 right-0  bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200`;
