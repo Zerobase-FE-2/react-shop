@@ -44,7 +44,7 @@ export default function BreadCrumb(props : any) {
         }
     }
     const BreadCrumb = tw.div`
-        flex items-center
+        flex items-center shrink-0
     `
     return(
         <>

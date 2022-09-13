@@ -42,6 +42,7 @@ export default function ProductDescription() {
   // if(!docs) return <div>Loading...</div>;
 
   // console.log(itemList);
+
   const Product = tw.div`
   flex flex-col min-h-screen lg:flex-row px-10 pt-16 bg-white dark:bg-gray-800
   `

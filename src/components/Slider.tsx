@@ -19,7 +19,9 @@ const SliderList = tw.ul` relative flex slider
 const NextBtn = tw.button`
   absolute h-full w-8 top-0 right-0  bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
-
+const SliderList = tw.ul`
+  relative flex
+`;
 const PrevBtn = tw.button`
 absolute h-full w-8 top-0 left-0 bg-transparent hover:bg-gray-500 hover:bg-opacity-25 hover:ease-in duration-200
 `;
