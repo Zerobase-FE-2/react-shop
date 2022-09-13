@@ -15,6 +15,7 @@ import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
+import ScrollToTop from './components/function/ScrollToTop';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,8 +37,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navbar />}>
+      <ScrollToTop>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/fasion" element={<FashionPage />} />
@@ -45,11 +47,10 @@ function App() {
           <Route path="/digital" element={<DigitalPage />} />
           <Route path="/:docId" element={<ProductDescription />} />
           <Route path="/cart" element={<Cart />} />
-          {/* <Route path="/" element={<Index />} /> */}
           <Route path="/signup" element={<SignUp />} />
-        </Route>
-      </Routes>
-      <Footer />
+          </Route>
+        </Routes>
+      </ScrollToTop>
     </BrowserRouter>
   );
 }

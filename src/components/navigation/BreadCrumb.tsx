@@ -42,25 +42,15 @@ export default function BreadCrumb(props: any) {
       default:
         break;
     }
-  };
-  const BreadCrumb = tw.div`
-        flex items-center
-    `;
-  return (
-    <>
-      {Object.keys(props).length < 1 ? (
-        <BreadCrumb>
-          {getCategoryName('')}
-          <ChevronRightIcon className="w-3 h-3 mx-2" />
-          {getCategoryName(path)}
-        </BreadCrumb>
-      ) : (
-        <BreadCrumb>
-          {getProductCategory(props.category)}
-          <ChevronRightIcon className="w-3 h-3 mx-2" />
-          {props.title}
-        </BreadCrumb>
-      )}
-    </>
-  );
+    const BreadCrumb = tw.div`
+        flex items-center shrink-0
+    `
+    return(
+        <>
+            {Object.keys(props).length < 1
+                ? <BreadCrumb>{getCategoryName("")}<ChevronRightIcon className="w-3 h-3 mx-2" />{getCategoryName(path)}</BreadCrumb>
+                : <BreadCrumb>{getProductCategory(props.category)}<ChevronRightIcon className="w-3 h-3 mx-2" />{props.title}</BreadCrumb>
+            }
+        </>
+    )
 }

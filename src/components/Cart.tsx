@@ -24,34 +24,30 @@ type product = {
 };
 
 export default function Cart() {
-  const calledItems = useSelector((state: any) => state.itemList);
-  const docs = calledItems.state;
-  const data: any = useSelector((state: any) => state.cart);
-  const dispatch = useDispatch();
-  const [popUp, setPopUp] = useState(false);
-  const [cart, setCart] = useState(data || []);
-  const removeFromCart = (id: number) => {
-    const temp = cart.filter((product: product) => product.id !== id);
-    setCart(temp);
-  };
+    const calledItems = useSelector((state:any) => state.itemList);
+    const docs = calledItems.state;
+    const data : any = useSelector((state:any) => state.cart);
+    const dispatch = useDispatch();
 
-  const calculateTotalPrice = (): number => {
-    let total = 0;
-    const arr = docs.filter((item: item) =>
-      cart.map((product: product) => product.id).includes(item.id)
-    );
-    const arr2 = arr.map(
-      (item: item) =>
-        item.price *
-        cart.find((product: product) => product.id === item.id).count
-    );
-    arr2.reduce((acc: number, cur: number) => {
-      acc += cur;
-      return (total = acc);
-    }, 0);
-    return total;
-  };
-  const Cart = tw.section`
+    const [cart, setCart] = useState(data);
+    const [popUp, setPopUp] = useState(false);
+  
+    const removeFromCart = (id : number) => {
+        const temp = cart.filter((product : product) => product.id !== id);
+        setCart(temp);
+    }
+    
+    const calculateTotalPrice = () : number => {
+        let total = 0;
+        const arr = docs.filter((item : item) => cart.map((product : product) => product.id).includes(item.id));
+        const arr2 = arr.map((item : item) => item.price * cart.find((product : product) => product.id === item.id).count);
+        arr2.reduce((acc : number, cur : number) => {
+            acc += cur;
+            return total = acc;
+        },0);
+        return total;
+    }
+    const Cart= tw.section`
     flex flex-col w-full min-h-screen bg-white dark:bg-gray-800 box-border p-4 lg:flex-row justify-between
     `;
   const CartItems = tw.section`
