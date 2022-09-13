@@ -20,6 +20,7 @@ export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
+
   const colorTheme = theme === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {

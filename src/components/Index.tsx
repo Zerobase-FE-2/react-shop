@@ -1,26 +1,28 @@
 import Slider from './Slider';
+import vegetableImg from '../assets/images/vegetables.jpeg';
+import shopImg from '../assets/images/shop.jpeg';
+import jeanImg from '../assets/images/jeans.jpeg';
 
 const Index = () => {
   return (
     <Slider
       images={[
         {
-          url: './src/assets/images/vegetables.jpeg',
+          url:  vegetableImg,
           title: 'hihi',
           description: 'hello',
         },
         {
-          url: './src/assets/images/shop.jpeg',
+          url: shopImg ,
           title: 'hihi',
           description: 'hello',
         },
         {
-          url: './src/assets/images/jeans.jpeg',
+          url: jeanImg ,
           title: 'hihi',
           description: 'hello',
         },
       ]}
-      totalSlides={3}
     />
   );
 };

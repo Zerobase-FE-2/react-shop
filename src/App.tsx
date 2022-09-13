@@ -15,7 +15,6 @@ import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
 import ScrollToTop from './components/function/ScrollToTop';
-// import { store } from './store/store'
 
 function App() {
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ function App() {
   
   if(error) return <div>failed to load</div>;
   if(!docs) return <div>Loading...</div>;
-
   dispatch(act.callapi(docs));
   // const something = useSelector(state => state);
   const something = dispatch(act.callapi(docs));;
@@ -48,7 +46,6 @@ function App() {
           <Route path="/digital" element={<DigitalPage />} />
           <Route path="/:docId" element={<ProductDescription />} />
           <Route path="/cart" element={<Cart />} />
-          {/* <Route path="/" element={<Index />} /> */}
           <Route path="/signup" element={<SignUp />} />
           </Route>
         </Routes>
