@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
-import tw from "tailwind-styled-components"
+import { Link } from 'react-router-dom';
+import tw from 'tailwind-styled-components';
 
 const MenuDiv = tw.div`
 w-screen h-screen flex flex-col justify-evenly items-center fixed -mt-2 -ml-2 bg-gray-100 dark:bg-gray-900 opacity-95
-`
+`;
 const MenuSpan = tw.span`
 text-2xl text-black dark:text-white
 `
