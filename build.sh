@@ -3,5 +3,5 @@
 #!/bin/sh
 cd ../
 mkdir output
-cp -R ./[your-repository-name]/* ./output
-cp -R ./output ./[your-repository-name]/
+cp -R ./react-shop/* ./output
+cp -R ./output ./react-shop/
