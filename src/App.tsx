@@ -28,10 +28,10 @@ function App() {
     // console.log(result.data);
     return result.data;
   }
-  const {data: docs, error} = useSWR('post', () => fetcher(productListApi));
-  
-  if(error) return <div>failed to load</div>;
-  if(!docs) return <Skel path={apapap} />;
+  const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
+
+  if (error) return <div>failed to load</div>;
+  if (!docs) return <Skel path={apapap} />;
   dispatch(act.callapi(docs));
 
   const something = dispatch(act.callapi(docs));
@@ -41,16 +41,17 @@ function App() {
       <ScrollToTop>
         <Routes>
           <Route path="/" element={<Navbar />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/fasion" element={<FashionPage />} />
-          <Route path="/accessory" element={<AccessoryPage />} />
-          <Route path="/digital" element={<DigitalPage />} />
-          <Route path="/:docId" element={<ProductDescription />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/fasion" element={<FashionPage />} />
+            <Route path="/accessory" element={<AccessoryPage />} />
+            <Route path="/digital" element={<DigitalPage />} />
+            <Route path="/:docId" element={<ProductDescription />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/signup" element={<SignUp />} />
           </Route>
         </Routes>
+        <Footer />
       </ScrollToTop>
     </BrowserRouter>
   );
