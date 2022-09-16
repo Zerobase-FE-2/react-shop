@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 interface autoDatas {
@@ -28,24 +28,61 @@ absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-a
 `;
 const SearchedList = tw.ul`
 w-screen md:w-full h-fit
-`;
-const SearchedItem = tw.li`
-p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white
-`;
+`
+const SearchedItem = tw.li<{isFocus?: boolean}>`
+p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white ${(props:any) => props.isFocus? "bg-gray-100 dark:bg-gray-600" : "bg-white dark:bg-gray-700"}
+`
 export default function SearchBar() {
-  const [keyword, setKeyword] = useState<string>('');
+	const [keyword, setKeyword] = useState<string>("");
   const [keyItems, setKeyItems] = useState<autoDatas[]>([]);
-  const onChangeData = (e: React.FormEvent<HTMLInputElement>) => {
+  const [index, setIndex] = useState<number>(-1);
+  const autoRef = useRef<HTMLUListElement>(null);
+  const onChangeData = (e:React.FormEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
   };
-  // async function fetchData() {
-  //   return fetch(
-  //     'https://fakestoreapi.com/products'
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => data.slice(0,100))
-  // }
-  const calledItems = useSelector((state: any) => state.itemList);
+  const navigate = useNavigate();
+  const ArrowDown = "ArrowDown";
+  const ArrowUp = "ArrowUp";
+  const Escape = "Escape";
+  const Selec = "Enter";
+  const handleKeyArrow = (e:React.KeyboardEvent) => {
+    if (keyItems.length > 0) {
+      switch (e.key) {
+        case ArrowDown: //키보드 아래 키
+        console.log(e);
+          setIndex(index + 1);
+          if (autoRef.current?.childElementCount === index + 1) setIndex(0);
+          console.log(index);
+
+          break;
+        case ArrowUp: //키보드 위에 키
+          setIndex(index - 1);
+          console.log(e);
+          if (index <= 0) {
+            //setKeyItems([]);
+            setIndex(-1);
+          }
+          console.log(index);
+          break;
+        case Selec: // enter key를 눌렀을때,
+          // setKeyword(`${keyItems[index].title}`);
+          setKeyword(``);
+          setKeyItems([]);
+          setIndex(-1);
+          // location.href = `${keyItems[index].id}`;
+          // return <Link to={`${keyItems[index].id}`} key={keyItems[index].title} />
+          navigate(`/${keyItems[index].id}`);
+          break;
+        case Escape: // esc key를 눌렀을때,
+          console.log(index);
+          setKeyItems([]);
+          setIndex(-1);
+          break;  
+      }  
+    } 
+  };
+
+  const calledItems = useSelector((state:any) => state.itemList);
   // console.log(calledItems.state);
   let itemList = calledItems.state;
   // console.log(itemList);
@@ -81,15 +118,16 @@ export default function SearchBar() {
   }, [keyword]); //키워드가 변경되면 api를 호출
   return (
     <SearchContainer>
-      <Search value={keyword} placeholder="검색" onChange={onChangeData} />
+      <Search value={keyword} placeholder='검색' onChange={onChangeData} onKeyDown={handleKeyArrow}/>
       {keyItems.length > 0 && keyword && (
         <AutoCompleteContainer>
-          <SearchedList>
-            {keyItems.map((search) => (
+         <SearchedList ref={autoRef}>
+          {keyItems.map((search, idx) => (
               <Link to={`${search.id}`} key={search.title}>
                 <SearchedItem
+                  isFocus={index === idx ? true : false}
                   onClick={() => {
-                    setKeyword('');
+                    setKeyword("");
                   }}
                 >
                   {search.title}

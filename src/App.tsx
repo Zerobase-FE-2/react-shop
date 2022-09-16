@@ -14,11 +14,13 @@ import AccessoryPage from './components/productShow/AccessoryPage';
 import DigitalPage from './components/productShow/DigitalPage';
 import ProductDescription from './components/productShow/ProductDescription';
 import Cart from './components/Cart';
+import Skel from './Skel';
 import Footer from './components/Footer';
 import ScrollToTop from './components/function/ScrollToTop';
 
 function App() {
   const dispatch = useDispatch();
+  const apapap = window.location.pathname;
   const productListApi = 'https://fakestoreapi.com/products';
   async function fetcher(url: string) {
     const result = await axios.get(url);
@@ -26,14 +28,13 @@ function App() {
     // console.log(result.data);
     return result.data;
   }
-  const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
-
-  if (error) return <div>failed to load</div>;
-  if (!docs) return <div>Loading...</div>;
+  const {data: docs, error} = useSWR('post', () => fetcher(productListApi));
+  
+  if(error) return <div>failed to load</div>;
+  if(!docs) return <Skel path={apapap} />;
   dispatch(act.callapi(docs));
-  // const something = useSelector(state => state);
+
   const something = dispatch(act.callapi(docs));
-  console.log(something);
 
   return (
     <BrowserRouter>
