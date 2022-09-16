@@ -1,13 +1,13 @@
 import * as types from '../actions/ActionTypes';
 
-const initialState:any = [];
+const initialState: any = [];
 
-export default function itemFilter(state = initialState, action:any){
+export default function itemFilter(state = initialState, action: any) {
   switch (action.type) {
     case 'CALL_API':
       return {
-        state:[...action.originaldata],
-      }
+        state: [...action.originaldata],
+      };
 
     // case 'FILTER_ITEM':
     //   if (action.filterwhat == 'fasion'){
@@ -15,7 +15,7 @@ export default function itemFilter(state = initialState, action:any){
     //       state: [ state.filter((item:any) => item.category === "men's clothing" || item.category === "women's clothing")]
     //     }
     //   }else return {...state}
-    
+
     default:
       return state;
   }
@@ -25,7 +25,7 @@ export default function itemFilter(state = initialState, action:any){
 
 // async function fetcher(url:string){
 //   const result = await axios.get(url)
-  
+
 //   // console.log(result.data);
 //   return result.data;
 // }
