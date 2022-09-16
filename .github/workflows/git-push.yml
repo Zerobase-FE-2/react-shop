@@ -18,7 +18,7 @@ jobs:
         run: sh ./build.sh
       - name: Pushe to another repository
         id: push_directory
-        uses: cpina/github-action-push-to-snother-repository@main
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{secrets.API_TOKEN_GITHUB}}
         with:
