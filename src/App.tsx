@@ -1,9 +1,9 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as act from './actions';
+
 import axios from 'axios';
 import useSWR from 'swr';
-
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import * as act from './actions';
 import Navbar from './components/navigation/Navbar';
 import Index from './components/Index';
 import MainPage from './components/MainPage';
