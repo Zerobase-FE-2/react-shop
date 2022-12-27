@@ -7,12 +7,15 @@ import App from './App';
 import './index.css';
 
 import { store, persistor } from './reducers/index';
+import { HelmetProvider } from 'react-helmet-async';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

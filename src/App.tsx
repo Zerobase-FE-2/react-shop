@@ -1,13 +1,10 @@
 import { useDispatch } from 'react-redux';
-
 import axios from 'axios';
 import useSWR from 'swr';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import * as act from './actions';
-import Navbar from './components/navigation/Navbar';
-import Index from './components/Index';
 import MainPage from './components/MainPage';
-import Login from './components/Login';
+import Login from './page/Login';
 import SignUp from './components/SignUp';
 import FashionPage from './components/productShow/FashionPage';
 import AccessoryPage from './components/productShow/AccessoryPage';
@@ -24,8 +21,6 @@ function App() {
   const productListApi = 'https://fakestoreapi.com/products';
   async function fetcher(url: string) {
     const result = await axios.get(url);
-
-    // console.log(result.data);
     return result.data;
   }
   const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
@@ -34,22 +29,18 @@ function App() {
   if (!docs) return <Skel path={apapap} />;
   dispatch(act.callapi(docs));
 
-  const something = dispatch(act.callapi(docs));
-
   return (
     <BrowserRouter>
       <ScrollToTop>
         <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/fasion" element={<FashionPage />} />
-            <Route path="/accessory" element={<AccessoryPage />} />
-            <Route path="/digital" element={<DigitalPage />} />
-            <Route path="/:docId" element={<ProductDescription />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Route>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/fasion" element={<FashionPage />} />
+          <Route path="/accessory" element={<AccessoryPage />} />
+          <Route path="/digital" element={<DigitalPage />} />
+          <Route path="/:docId" element={<ProductDescription />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <Footer />
       </ScrollToTop>
