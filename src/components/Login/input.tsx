@@ -19,10 +19,12 @@ export default function Input({
 }: InputProps) {
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
+      <label className="text-gray-800" htmlFor={name}>
+        {label}
+      </label>
       <div>
         <input
-          className="w-full py-1 px-2 text-gray-800"
+          className="w-full rounded-md border border-indigo-300 py-2 px-2 text-gray-800 outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           type={type}
           {...register}
           required={required}
