@@ -5,7 +5,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import * as act from './actions';
 import MainPage from './components/MainPage';
 import Login from './page/Login';
-import SignUp from './components/SignUp';
+import SignUp from './page/SignUp';
 import FashionPage from './components/productShow/FashionPage';
 import AccessoryPage from './components/productShow/AccessoryPage';
 import DigitalPage from './components/productShow/DigitalPage';
@@ -23,11 +23,11 @@ function App() {
     const result = await axios.get(url);
     return result.data;
   }
-  const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
+  // const { data: docs, error } = useSWR('post', () => fetcher(productListApi));
 
-  if (error) return <div>failed to load</div>;
-  if (!docs) return <Skel path={apapap} />;
-  dispatch(act.callapi(docs));
+  // if (error) return <div>failed to load</div>;
+  // if (!docs) return <Skel path={apapap} />;
+  // dispatch(act.callapi(docs));
 
   return (
     <BrowserRouter>
@@ -42,7 +42,6 @@ function App() {
           <Route path="/:docId" element={<ProductDescription />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
-        <Footer />
       </ScrollToTop>
     </BrowserRouter>
   );

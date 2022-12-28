@@ -2,10 +2,10 @@ import React from 'react';
 import tw from 'tailwind-styled-components';
 import SEOTag from '../components/SEOTag';
 import LoginFormContainer from '../containers/Login/LoginFormContainer';
-import SSOLoginContainer from '../containers/Login/SsoLoginContainer';
+import SSOLoginContainer from '../containers/Login/SSOLoginContainer';
 
 const LoginSection = tw.section`
-  min-h-screen flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8
+  min-h-screen min-w-[500px] flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8
   `;
 const LoginTitle = tw.h2`
   mt-6 text-center text-3xl text-black dark:text-white font-extrabold

@@ -54,9 +54,9 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-violet-700 rounded-lg px-4 h-12 text-white font-semibold hover:bg-violet-800;
+    @apply h-12 rounded-lg bg-violet-700 px-4 font-semibold text-white hover:bg-violet-800;
   }
   .img-primary {
-    @apply h-48 w-full lg:w-56 object-contain bg-white rounded-lg;
+    @apply h-48 w-full rounded-lg bg-white object-contain lg:w-56;
   }
 }

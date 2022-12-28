@@ -25,6 +25,7 @@ export default function LoginFormContainer() {
     }
     reset();
   };
+
   return (
     <form onSubmit={handleSubmit(onValid)} className="mt-8 space-y-6">
       <Input
@@ -47,8 +48,8 @@ export default function LoginFormContainer() {
       />
       {/* <Error>{errors.password?.message}</Error> */}
       <div className="flex space-x-2">
-        <Btn kind="signUp" />
-        <Btn kind="logIn" />
+        <Btn isLarge={false} kind="signUp" />
+        <Btn isLarge={false} kind="logIn" />
       </div>
     </form>
   );

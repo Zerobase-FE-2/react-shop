@@ -29,11 +29,11 @@ export default function SSOLoginContainer() {
   }, []);
 
   return (
-    <div className="flex items-center justify-around">
-      <button className="btn btn-ghost" onClick={handleGithub}>
+    <div className="flex w-full items-center justify-around space-x-2">
+      <button className="btn btn-ghost w-1/2" onClick={handleGithub}>
         <img src={githubIcon} className="h-10 w-10" alt="Icon_github" />
       </button>
-      <button className="btn btn-ghost" onClick={handleGoogle}>
+      <button className="btn btn-ghost w-1/2" onClick={handleGoogle}>
         <img src={googleIcon} className="h-10 w-10" alt="Icon_google" />
       </button>
     </div>
