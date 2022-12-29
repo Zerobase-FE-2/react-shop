@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: 'AIzaSyCbn9_dasZEVvS_HjIV5vEkFLKFqrxP9r8',
   authDomain: 'react-shop-c6d79.firebaseapp.com',
   projectId: 'react-shop-c6d79',
