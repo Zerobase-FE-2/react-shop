@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import Input from '../../components/Login/input';
+import useCheckUser from '../../hooks/useCheckUser';
 import { setLoginSession } from '../../libs/setLoginSession';
 
 export interface EnterForm {
@@ -9,6 +10,8 @@ export interface EnterForm {
 }
 
 export default function LoginFormContainer() {
+  useCheckUser();
+
   const {
     register,
     reset,

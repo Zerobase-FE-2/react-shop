@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import Input from '../../components/Login/input';
+import useCheckUser from '../../hooks/useCheckUser';
 import { signUp } from '../../service/auth';
 import { EnterForm } from '../Login/LoginFormContainer';
 
@@ -13,6 +14,8 @@ interface SignupInputs {
 }
 
 export default function SignupFormContainer() {
+  useCheckUser();
+
   const {
     register,
     reset,
