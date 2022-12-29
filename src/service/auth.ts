@@ -9,36 +9,38 @@ import {
   signOut,
 } from 'firebase/auth';
 import { SetStateAction } from 'react';
+
 type email = string;
 type password = string;
 
 export const signUp = async (email: email, password: password) => {
-  await createUserWithEmailAndPassword(authService, email, password)
-    .then((userCredential) => {
-      //signed In
-      const user = userCredential.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      throw new Error(errorMessage);
-    });
+  try {
+    const user = await createUserWithEmailAndPassword(
+      authService,
+      email,
+      password
+    );
+    console.log('signup', user);
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    } else message = String(error);
+    throw new Error(message);
+  }
 };
 
 export const signIn = async (email: email, password: password) => {
-  await signInWithEmailAndPassword(authService, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      if (errorCode == 'auth/wrong-password') {
-        throw new Error('비밀번호가 틀렸습니다.');
-      } else {
-        throw new Error(errorMessage);
-      }
-    });
+  try {
+    const user = await signInWithEmailAndPassword(authService, email, password);
+    console.log('logedin', user);
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    } else message = String(error);
+    throw new Error(message);
+  }
 };
 
 export const logOut = async () => {

@@ -2,14 +2,15 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
 
 interface LoginBtnProps {
-  kind: 'signUp' | 'logIn';
+  kind: 'link' | 'btn';
   isLarge?: boolean;
+  name: string;
 }
 
-export default function Btn({ kind, isLarge = true }: LoginBtnProps) {
+export default function Btn({ kind, isLarge = true, name }: LoginBtnProps) {
   return (
     <>
-      {kind === 'signUp' ? (
+      {kind === 'link' ? (
         <Link
           to="/signup"
           className={`group flex ${
@@ -17,11 +18,11 @@ export default function Btn({ kind, isLarge = true }: LoginBtnProps) {
           } justify-center rounded-md border border-transparent bg-indigo-600 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
           <div className="flex h-full w-full justify-center py-2 px-4">
-            Sign Up
+            {name}
           </div>
         </Link>
       ) : null}
-      {kind === 'logIn' ? (
+      {kind === 'btn' ? (
         <button
           type="submit"
           className={`group relative flex  ${
@@ -34,7 +35,7 @@ export default function Btn({ kind, isLarge = true }: LoginBtnProps) {
               aria-hidden="true"
             />
           </div>
-          Log In
+          {name}
         </button>
       ) : null}
     </>
