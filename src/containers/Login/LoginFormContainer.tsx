@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import Input from '../../components/Login/input';
-import * as AuthService from '../../service/auth';
+import { setLoginSession } from '../../libs/setLoginSession';
 
-interface EnterForm {
+export interface EnterForm {
   email: string;
   password: string;
 }
@@ -16,10 +16,10 @@ export default function LoginFormContainer() {
     formState: { errors },
   } = useForm<EnterForm>();
 
-  const onValid = (validForm: EnterForm) => {
+  const onValid = async (validForm: EnterForm) => {
     const { email, password } = validForm;
     try {
-      AuthService.signIn(email, password);
+      await setLoginSession({ email, password });
     } catch (error) {
       console.log(error);
     }
@@ -48,8 +48,8 @@ export default function LoginFormContainer() {
       />
       {/* <Error>{errors.password?.message}</Error> */}
       <div className="flex space-x-2">
-        <Btn isLarge={false} kind="signUp" />
-        <Btn isLarge={false} kind="logIn" />
+        <Btn isLarge={false} name="Sign Up" kind="link" />
+        <Btn isLarge={false} name="Log In" kind="btn" />
       </div>
     </form>
   );

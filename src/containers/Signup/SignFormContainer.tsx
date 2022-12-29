@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import Input from '../../components/Login/input';
 import { signUp } from '../../service/auth';
+import { EnterForm } from '../Login/LoginFormContainer';
 
 interface SignupInputs {
   email: string;
@@ -14,15 +15,16 @@ interface SignupInputs {
 export default function SignupFormContainer() {
   const {
     register,
+    reset,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm<SignupInputs>();
 
-  const onSubmit: SubmitHandler<SignupInputs> = async (data, e) => {
-    const { email, password } = data;
+  const onValid = async (validForm: EnterForm) => {
+    console.log(validForm);
+    const { email, password } = validForm;
     try {
-      e?.target.reset();
       await signUp(email, password);
     } catch (error) {
       if (typeof error == 'string') {
@@ -31,6 +33,7 @@ export default function SignupFormContainer() {
         alert((error as Error).message);
       }
     }
+    reset();
   };
 
   return (
@@ -38,7 +41,7 @@ export default function SignupFormContainer() {
       action="submit"
       className="mt-8 space-y-6"
       method="POST"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onValid)}
     >
       <input type="hidden" name="remember" defaultValue="true" />
       <Input
@@ -104,7 +107,7 @@ export default function SignupFormContainer() {
       />
       {/* <Error>{errors.age?.message}</Error> */}
       <div className="flex">
-        <Btn kind="signUp" isLarge={true} />
+        <Btn kind="btn" name="Sign Up" isLarge={true} />
       </div>
     </form>
   );
