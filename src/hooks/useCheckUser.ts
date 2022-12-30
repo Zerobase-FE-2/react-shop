@@ -3,7 +3,6 @@ import { useLocation } from 'react-router';
 import { authService } from './../service/firebase';
 import { firebaseConfig } from '../service/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useRoutes, useParams } from 'react-router';
 
 export default async function useCheckUser() {
   const router = useLocation();

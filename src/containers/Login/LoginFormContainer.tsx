@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import Input from '../../components/Login/input';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import useCheckUser from '../../hooks/useCheckUser';
 import { setLoginSession } from '../../libs/setLoginSession';
+import { logIn } from '../../reducers/userSlice';
 
 export interface EnterForm {
   email: string;
@@ -10,7 +12,7 @@ export interface EnterForm {
 }
 
 export default function LoginFormContainer() {
-  useCheckUser();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -22,7 +24,14 @@ export default function LoginFormContainer() {
   const onValid = async (validForm: EnterForm) => {
     const { email, password } = validForm;
     try {
-      await setLoginSession({ email, password });
+      const { user: loggedInUser } = await setLoginSession({ email, password });
+      dispatch(
+        logIn({
+          username: loggedInUser.displayName || '',
+          email: loggedInUser.email!,
+          uid: loggedInUser.uid,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
