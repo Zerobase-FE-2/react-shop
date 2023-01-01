@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import ErrorMessage from '../../components/Login/error';
 import Input from '../../components/Login/input';
-import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
-import useCheckUser from '../../hooks/useCheckUser';
+import { useAppDispatch } from '../../hooks/rtkHooks';
 import { setLoginSession } from '../../libs/setLoginSession';
 import { logIn } from '../../reducers/userSlice';
 

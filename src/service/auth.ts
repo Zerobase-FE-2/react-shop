@@ -18,13 +18,9 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 export const signUp = async (email: email, password: password) => {
+  let user;
   try {
-    const user = await createUserWithEmailAndPassword(
-      authService,
-      email,
-      password
-    );
-    console.log('signup', user);
+    user = await createUserWithEmailAndPassword(authService, email, password);
   } catch (error) {
     let message;
     if (error instanceof Error) {
@@ -32,12 +28,12 @@ export const signUp = async (email: email, password: password) => {
     } else message = String(error);
     throw new Error(message);
   }
+  return user;
 };
 
 export const signIn = async (email: email, password: password) => {
   try {
-    const user = await signInWithEmailAndPassword(authService, email, password);
-    return user;
+    return await signInWithEmailAndPassword(authService, email, password);
   } catch (error) {
     let message;
     if (error instanceof Error) {

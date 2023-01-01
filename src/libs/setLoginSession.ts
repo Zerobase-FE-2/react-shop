@@ -1,5 +1,5 @@
 import { setPersistence, browserSessionPersistence } from 'firebase/auth';
-import { signIn } from '../service/auth';
+import { signIn, signUp } from '../service/auth';
 import { authService } from '../service/firebase';
 
 interface loginFBProps {
@@ -21,6 +21,21 @@ export const setLoginSession = async ({ email, password }: loginFBProps) => {
     throw new Error(message);
   }
 
+  return user;
+};
+
+export const setSignupSession = async ({ email, password }: loginFBProps) => {
+  let user;
+  try {
+    await setPersistence(authService, browserSessionPersistence);
+    user = await signUp(email, password);
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    } else message = String(error);
+    throw new Error(message);
+  }
   return user;
 };
 

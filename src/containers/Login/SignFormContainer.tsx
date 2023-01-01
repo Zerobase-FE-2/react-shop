@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
 import ErrorMessage from '../../components/Login/error';
 import Input from '../../components/Login/input';
-import useCheckUser from '../../hooks/useCheckUser';
-import { signUp } from '../../service/auth';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { setSignupSession } from '../../libs/setLoginSession';
+import { logIn } from '../../reducers/userSlice';
 import { EnterForm } from './LoginFormContainer';
 
 interface SignupInputs {
@@ -17,6 +18,8 @@ interface SignupInputs {
 
 export default function SignupFormContainer() {
   const [error, setError] = useState('');
+  const dispatch = useAppDispatch();
+
   const {
     register,
     reset,
@@ -28,9 +31,19 @@ export default function SignupFormContainer() {
   const onValid = async (validForm: EnterForm) => {
     const { email, password } = validForm;
     try {
-      await signUp(email, password);
+      const { user: loggedInUser } = await setSignupSession({
+        email,
+        password,
+      });
+      dispatch(
+        logIn({
+          username: loggedInUser.displayName || '',
+          email: loggedInUser.email!,
+          uid: loggedInUser.uid,
+        })
+      );
     } catch (error) {
-      setError(error as string);
+      setError('use another Email or you already has id');
     }
     reset();
   };

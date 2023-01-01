@@ -4,8 +4,8 @@ import tw from 'tailwind-styled-components';
 import SEOTag from '../components/SEOTag';
 import LoginFormContainer from '../containers/Login/LoginFormContainer';
 import SSOContainer from '../containers/Login/SSOContainer';
-import { useAppSelector } from '../hooks/rtkHooks';
-import useCheckUser from '../hooks/useCheckUser';
+import { useAppDispatch, useAppSelector } from '../hooks/rtkHooks';
+import { firebaseConfig } from '../service/firebase';
 
 const LoginSection = tw.section`
   min-h-screen h-screen min-w-[500px] flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8
@@ -19,7 +19,11 @@ const Login = () => {
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (user.uid) {
+    const token = sessionStorage.getItem(
+      `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
+    );
+
+    if (user.uid || token) {
       navigator('/');
     }
   }, [user]);
