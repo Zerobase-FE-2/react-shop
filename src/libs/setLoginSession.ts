@@ -51,6 +51,5 @@ export const setSSOLoginSession = async (fn: any) => {
     } else message = String(error);
     throw new Error(message);
   }
-
   return result;
 };
