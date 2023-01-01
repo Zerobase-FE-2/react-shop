@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
+import ErrorMessage from '../../components/Login/error';
 import Input from '../../components/Login/input';
 import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 import useCheckUser from '../../hooks/useCheckUser';
@@ -42,11 +43,7 @@ export default function LoginFormContainer() {
 
   return (
     <form onSubmit={handleSubmit(onValid)} className="mt-6 space-y-3">
-      <div className="flex h-[1px] w-full items-center justify-center px-2">
-        <span className="text-md font-bold text-red-500">
-          {error ? error : ''}
-        </span>
-      </div>
+      <ErrorMessage message={error} isTitle={true} />
       <Input
         type="email"
         label="Email"
@@ -55,11 +52,7 @@ export default function LoginFormContainer() {
         register={register('email', { required: 'Email Address is required' })}
         name="email"
       />
-      <div className="flex h-[1px] w-full items-center justify-start px-2">
-        <span className="text-sm font-bold text-red-500">
-          {errors.email ? errors.email.message : ''}
-        </span>
-      </div>
+      <ErrorMessage message={errors.email?.message} />
 
       <Input
         type="password"
@@ -69,11 +62,7 @@ export default function LoginFormContainer() {
         placeholder="Write your password"
         register={register('password', { required: 'Password is required' })}
       />
-      <div className="flex h-[1px] w-full items-center justify-start px-2">
-        <span className="text-sm font-bold text-red-500">
-          {errors.password ? errors.password.message : ''}
-        </span>
-      </div>
+      <ErrorMessage message={errors.password?.message} />
       <div className="flex space-x-2">
         <Btn isLarge={false} name="Sign Up" kind="link" />
         <Btn isLarge={false} name="Log In" kind="btn" />
