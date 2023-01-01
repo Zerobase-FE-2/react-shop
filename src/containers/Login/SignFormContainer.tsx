@@ -1,8 +1,12 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
+import ErrorMessage from '../../components/Login/error';
 import Input from '../../components/Login/input';
-import useCheckUser from '../../hooks/useCheckUser';
-import { signUp } from '../../service/auth';
+import { useAppDispatch } from '../../hooks/rtkHooks';
+import { setSignupSession } from '../../libs/setLoginSession';
+import { logIn } from '../../reducers/userSlice';
 import { EnterForm } from './LoginFormContainer';
 
 interface SignupInputs {
@@ -14,7 +18,8 @@ interface SignupInputs {
 }
 
 export default function SignupFormContainer() {
-  useCheckUser();
+  const [error, setError] = useState('');
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -22,19 +27,24 @@ export default function SignupFormContainer() {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupInputs>();
+  } = useForm<SignupInputs>({ mode: 'onChange' });
 
   const onValid = async (validForm: EnterForm) => {
-    console.log(validForm);
     const { email, password } = validForm;
     try {
-      await signUp(email, password);
+      const { user: loggedInUser } = await setSignupSession({
+        email,
+        password,
+      });
+      dispatch(
+        logIn({
+          username: loggedInUser.displayName || '',
+          email: loggedInUser.email!,
+          uid: loggedInUser.uid,
+        })
+      );
     } catch (error) {
-      if (typeof error == 'string') {
-        alert(error);
-      } else {
-        alert((error as Error).message);
-      }
+      setError('use another Email or you already has id');
     }
     reset();
   };
@@ -42,10 +52,11 @@ export default function SignupFormContainer() {
   return (
     <form
       action="submit"
-      className="mt-8 space-y-6"
+      className="mt-5 space-y-3"
       method="POST"
       onSubmit={handleSubmit(onValid)}
     >
+      <ErrorMessage message={error} isTitle={true} />
       <input type="hidden" name="remember" defaultValue="true" />
       <Input
         type="email"
@@ -53,9 +64,9 @@ export default function SignupFormContainer() {
         name="email"
         required={true}
         placeholder="What is your email"
-        register={register('email', { required: true })}
+        register={register('email', { required: 'email is required' })}
       />
-      {/* <Error>{errors.email?.message}</Error> */}
+      <ErrorMessage message={errors.email?.message} />
 
       <Input
         type="password"
@@ -63,9 +74,12 @@ export default function SignupFormContainer() {
         name="password"
         required={true}
         placeholder="Write your password"
-        register={register('password', { required: true })}
+        register={register('password', {
+          required: 'password is required',
+          minLength: { value: 8, message: 'min 8 Length is required' },
+        })}
       />
-      {/* <Error>{errors.password?.message}</Error> */}
+      <ErrorMessage message={errors.password?.message} />
 
       <Input
         type="password"
@@ -74,7 +88,7 @@ export default function SignupFormContainer() {
         required={true}
         placeholder="Write password one more"
         register={register('confirm_password', {
-          required: true,
+          required: 'password check is required',
           validate: (val: string) => {
             if (watch('password') != val) {
               return 'Your passwords do no match';
@@ -82,13 +96,13 @@ export default function SignupFormContainer() {
           },
         })}
       />
-      {/* <Error>{errors.confirm_password?.message}</Error> */}
+      <ErrorMessage message={errors.confirm_password?.message} />
 
       <br />
 
       <Input
         register={register('name', {
-          required: true,
+          required: 'name is required',
         })}
         label="Name"
         type="name"
@@ -96,11 +110,11 @@ export default function SignupFormContainer() {
         required={true}
         placeholder="What's your name?"
       />
-      {/* <Error>{errors.name?.message}</Error> */}
+      <ErrorMessage message={errors.name?.message} />
 
       <Input
-        register={register('name', {
-          required: true,
+        register={register('age', {
+          required: 'age is required',
         })}
         label="Age"
         name="age"
@@ -108,7 +122,7 @@ export default function SignupFormContainer() {
         required={true}
         placeholder="What's your age"
       />
-      {/* <Error>{errors.age?.message}</Error> */}
+      <ErrorMessage message={errors.age?.message} />
       <div className="flex">
         <Btn kind="btn" name="Sign Up" isLarge={true} />
       </div>

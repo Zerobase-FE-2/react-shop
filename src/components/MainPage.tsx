@@ -1,6 +1,7 @@
 import Index from './Index';
 import ProductsTable from './productShow/ProductsTable';
 import tw from 'tailwind-styled-components';
+import Navbar from '../containers/Navigation/Navbar';
 
 export default function MainPage() {
   const Title = tw.h1`
@@ -9,9 +10,10 @@ export default function MainPage() {
 
   return (
     <div>
+      <Navbar />
       <div id="container" className="w-full">
         <Index />
-        <div className="text-center bg-white dark:bg-gray-800">
+        <div className="bg-white text-center dark:bg-gray-800">
           <Title>패션</Title>
           <div>
             <ProductsTable category="main" catego="fasion" />

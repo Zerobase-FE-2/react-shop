@@ -1,8 +1,10 @@
+
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Btn from '../../components/Login/btn';
+import ErrorMessage from '../../components/Login/error';
 import Input from '../../components/Login/input';
-import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
-import useCheckUser from '../../hooks/useCheckUser';
+import { useAppDispatch } from '../../hooks/rtkHooks';
 import { setLoginSession } from '../../libs/setLoginSession';
 import { logIn } from '../../reducers/userSlice';
 
@@ -12,6 +14,7 @@ export interface EnterForm {
 }
 
 export default function LoginFormContainer() {
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
 
   const {
@@ -19,7 +22,7 @@ export default function LoginFormContainer() {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<EnterForm>();
+  } = useForm<EnterForm>({ mode: 'onChange' });
 
   const onValid = async (validForm: EnterForm) => {
     const { email, password } = validForm;
@@ -33,22 +36,23 @@ export default function LoginFormContainer() {
         })
       );
     } catch (error) {
-      console.log(error);
+      setError('check your email address or password');
     }
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onValid)} className="mt-8 space-y-6">
+    <form onSubmit={handleSubmit(onValid)} className="mt-6 space-y-3">
+      <ErrorMessage message={error} isTitle={true} />
       <Input
         type="email"
         label="Email"
         placeholder="Write your Email"
         required={true}
-        register={register('email', { required: true })}
+        register={register('email', { required: 'Email Address is required' })}
         name="email"
       />
-      {/* <Error>{errors.email?.message}</Error> */}
+      <ErrorMessage message={errors.email?.message} />
 
       <Input
         type="password"
@@ -56,9 +60,9 @@ export default function LoginFormContainer() {
         name="password"
         required={true}
         placeholder="Write your password"
-        register={register('password', { required: true })}
+        register={register('password', { required: 'Password is required' })}
       />
-      {/* <Error>{errors.password?.message}</Error> */}
+      <ErrorMessage message={errors.password?.message} />
       <div className="flex space-x-2">
         <Btn isLarge={false} name="Sign Up" kind="link" />
         <Btn isLarge={false} name="Log In" kind="btn" />
