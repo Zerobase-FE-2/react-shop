@@ -1,3 +1,4 @@
+import React from 'react';
 import ProductsTable from '../../components/productShow/ProductsTable';
 
 import {
@@ -7,7 +8,6 @@ import {
 } from '../../reducers/productSlice';
 import tw from 'tailwind-styled-components';
 import { useAppSelector } from '../../hooks/rtkHooks';
-import { useEffect } from 'react';
 
 interface ProductsProps {
   title: string;
@@ -17,7 +17,8 @@ interface ProductsProps {
 const Title = tw.h1`
   text-3xl font-bold p-6 text-black dark:text-white
   `;
-const getPropsFn = {
+
+export const getPropsFn = {
   fashion: getFashionProducts,
   digital: getElectronicsProducts,
   accessory: getAccesoryProducts,
