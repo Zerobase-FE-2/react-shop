@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk(
     return await (await fetch('https://fakestoreapi.com/products')).json();
   }
 );
-interface Product {
+export interface Product {
   category: string;
   description: string;
   id: number;
@@ -49,12 +49,15 @@ const productSlice = createSlice({
     },
   },
 });
+
 const productsState = (state: RootState) => state.products.products;
+
 export const getFashionProducts = createSelector(productsState, (products) => {
   return products.filter((product) =>
     product.category.split(' ').includes('clothing')
   );
 });
+
 export const getElectronicsProducts = createSelector(
   productsState,
   (products) => {
@@ -63,6 +66,7 @@ export const getElectronicsProducts = createSelector(
     );
   }
 );
+
 export const getAccesoryProducts = createSelector(productsState, (products) => {
   return products.filter((product) => product.category.includes('jewelery'));
 });

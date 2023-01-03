@@ -21,7 +21,7 @@ export default function MainPage() {
       <Navbar />
       <div id="container" className="w-full">
         <Index />
-        <div className="bg-white text-center dark:bg-gray-800">
+        <div className="bg-white px-12 text-center dark:bg-gray-800">
           <Products title="패션" category="fashion" />
           <Products title="악세서리" category="accessory" />
           <Products title="디지털" category="digital" />

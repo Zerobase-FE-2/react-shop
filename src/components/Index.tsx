@@ -1,22 +1,16 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import vegetableImg from '../assets/images/vegetables.jpeg';
-import shopImg from '../assets/images/shop.jpeg';
-import jeanImg from '../assets/images/jeans.jpeg';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
   const settings = {
-    dots: false,
+    arrows: false,
     infinite: true,
     draggable: true,
     autoplay: true,
-    autoplaySpeed: 20000,
-
+    autoplaySpeed: 10000,
     pauseOnHover: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
   };
   return (
     <Slider {...settings}>
