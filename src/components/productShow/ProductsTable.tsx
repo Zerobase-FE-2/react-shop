@@ -1,15 +1,16 @@
+import React from 'react';
 import { Product } from '../../reducers/productSlice';
 import ProductItemSkeleton from './Loading/ProductItemSkeleton';
 import ProductItem from './ProductItem';
 
 interface ProductsTableProps {
   products: Product[];
-  loading: boolean;
+  loading?: boolean;
 }
 
 export default function ProductsTable({
   products,
-  loading,
+  loading = false,
 }: ProductsTableProps) {
   return (
     <>
