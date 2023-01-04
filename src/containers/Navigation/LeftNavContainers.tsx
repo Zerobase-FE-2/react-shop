@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import Btn from '../../components/navigation/Btn';
@@ -17,7 +18,7 @@ export default function LeftBtns() {
         <HomeBtn>React Shop</HomeBtn>
       </Link>
       <Btn title="패션" isLink={true} link="fashion" />
-      <Btn title="악세서리" isLink={true} link="accesary" />
+      <Btn title="악세서리" isLink={true} link="accessory" />
       <Btn title="디지털" isLink={true} link="digital" />
     </LeftBar>
   );

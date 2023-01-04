@@ -1,13 +1,12 @@
 import React from 'react';
 import ProductsTable from '../../components/productShow/ProductsTable';
-
 import {
   getAccesoryProducts,
   getFashionProducts,
   getElectronicsProducts,
 } from '../../reducers/productSlice';
 import tw from 'tailwind-styled-components';
-import { useAppSelector } from '../../hooks/rtkHooks';
+import useProducts from '../../hooks/useProducts';
 
 interface ProductsProps {
   title: string;
@@ -25,8 +24,7 @@ export const getPropsFn = {
 };
 
 export default function Products({ title, category }: ProductsProps) {
-  const products = useAppSelector(getPropsFn[category]);
-  const loading = useAppSelector((state) => state.products.loading);
+  const { products, loading } = useProducts({ category });
 
   return (
     <>

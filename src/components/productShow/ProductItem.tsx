@@ -10,7 +10,7 @@ export default function ProductItem({ product }: ProductItemProps) {
   return (
     <div
       key={product.id}
-      className="group m-2 rounded-lg border-2 shadow-md transition-opacity hover:opacity-60 dark:border-none"
+      className="group m-2 rounded-lg border-2 shadow-xl transition-opacity hover:opacity-60 dark:border-none"
     >
       <Link to={`/${product.id}`}>
         <figure className="hover: flex h-80 items-center justify-center rounded-t-lg bg-white">
