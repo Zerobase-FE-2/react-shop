@@ -15,15 +15,15 @@ export default function ProductsTable({
   return (
     <>
       {loading ? (
-        <div className={`grid pb-20 md:grid-cols-2 lg:grid-cols-4`}>
+        <div className={`grid gap-10 pb-20 lg:grid-cols-2 xl:grid-cols-4`}>
           {Array.from({ length: 8 }, (_, idx) => idx).map((idx) => (
-            <ProductItemSkeleton idx={idx} />
+            <ProductItemSkeleton key={idx} />
           ))}
         </div>
       ) : (
         <div className={`grid gap-10 pb-20 lg:grid-cols-2 xl:grid-cols-4`}>
           {products.map((product: Product) => (
-            <ProductItem product={product} />
+            <ProductItem product={product} key={product.id} />
           ))}
         </div>
       )}

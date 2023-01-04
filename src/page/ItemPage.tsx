@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductsTable from '../components/productShow/ProductsTable';
 import tw from 'tailwind-styled-components';
 import BreadCrumb from '../components/navigation/BreadCrumb';
-import { useAppSelector } from '../hooks/rtkHooks';
-import { getFashionProducts, Product } from '../reducers/productSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/rtkHooks';
+import { fetchProducts, Product } from '../reducers/productSlice';
 import { getPropsFn } from '../containers/Main/Products';
+import SEOTag from '../components/SEOTag';
+import Navbar from '../containers/Navigation/Navbar';
+import useProducts from '../hooks/useProducts';
 
-const Title = tw.h1`
-  text-3xl font-bold pb-6 text-center text-black dark:text-white
-  `;
 interface ItemPageProps {
   category: 'digital' | 'accessory' | 'fashion';
 }
@@ -16,20 +16,24 @@ interface ItemPageProps {
 const getTitle = {
   digital: '디지털',
   accessory: '악세서리',
-  fation: '패션',
+  fashion: '패션',
 };
 
+const Title = tw.h1`
+  text-3xl font-bold pb-6 text-center text-black dark:text-white
+  `;
+
 export default function ItemPage({ category }: ItemPageProps) {
-  const products = useAppSelector<Product[]>(getPropsFn[category]);
+  const { products, loading } = useProducts(category);
 
   return (
-    <div className="min-h-full bg-white dark:bg-gray-800">
-      <div className="p-4">
-        <BreadCrumb />
-      </div>
+    <div className="h-[100vh] bg-white dark:bg-gray-800">
+      <SEOTag title={category} />
+      <Navbar />
+      <div className="p-4">{/* <BreadCrumb /> */}</div>
       <Title>{getTitle[category]}</Title>
       <div>
-        <ProductsTable products={products} />
+        <ProductsTable products={products} loading={loading} />
       </div>
     </div>
   );

@@ -70,4 +70,10 @@ export const getElectronicsProducts = createSelector(
 export const getAccesoryProducts = createSelector(productsState, (products) => {
   return products.filter((product) => product.category.includes('jewelery'));
 });
+
+export const getSelectedProduct = (id: number) =>
+  createSelector(productsState, (products) => {
+    return products.filter((product) => product.id === id);
+  });
+
 export default productSlice.reducer;

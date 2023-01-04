@@ -1,12 +1,11 @@
+import React from 'react';
 import Index from '../components/Index';
-import ProductsTable from '../components/productShow/ProductsTable';
-
 import Navbar from '../containers/Navigation/Navbar';
 import SEOTag from '../components/SEOTag';
 import Products from '../containers/Main/Products';
-import { useAppDispatch, useAppSelector } from '../hooks/rtkHooks';
+import { useAppDispatch } from '../hooks/rtkHooks';
 import { useEffect } from 'react';
-import { fetchProducts, getAccesoryProducts } from '../reducers/productSlice';
+import { fetchProducts } from '../reducers/productSlice';
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
