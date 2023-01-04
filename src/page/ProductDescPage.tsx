@@ -6,7 +6,7 @@ import { useAppSelector } from '../hooks/rtkHooks';
 import { getSelectedProduct } from '../reducers/productSlice';
 import Navbar from '../containers/Navigation/Navbar';
 import ProductDescription from '../components/productShow/ProductDescription';
-// import BreadCrumb from '../navigation/BreadCrumb';
+import BreadCrumb from '../components/productShow/BreadCrumb';
 
 export default function ProductDescPage() {
   const { productId } = useParams();
@@ -19,12 +19,7 @@ export default function ProductDescPage() {
         <title>{product.title}</title>
       </Helmet>
       <Navbar />
-      <div className="bg-white p-4 dark:bg-gray-800">
-        {/* <BreadCrumb
-          category={selectedItem.category}
-          title={selectedItem.title}
-        /> */}
-      </div>
+      <BreadCrumb category={product.category} title={product.title} />
       <ProductDescription product={product} />
     </div>
   );
