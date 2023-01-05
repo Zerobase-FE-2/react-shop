@@ -5,6 +5,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { Product } from '../types';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
@@ -12,15 +13,7 @@ export const fetchProducts = createAsyncThunk(
     return await (await fetch('https://fakestoreapi.com/products')).json();
   }
 );
-export interface Product {
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  rating: { rating: number; count: number };
-  title: string;
-}
+
 interface ProductsState {
   products: Product[];
   loading: boolean;

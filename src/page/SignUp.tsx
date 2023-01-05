@@ -1,11 +1,12 @@
-import tw from 'tailwind-styled-components';
 import React, { useEffect } from 'react';
-import SignupFormContainer from '../containers/Login/SignFormContainer';
-import SSOContainer from '../containers/Login/SSOContainer';
-import useCheckUser from '../hooks/useCheckUser';
+import tw from 'tailwind-styled-components';
 import { useNavigate } from 'react-router';
+
 import { useAppSelector } from '../hooks/rtkHooks';
 import { firebaseConfig } from '../service/firebase';
+
+import SignupFormContainer from '../containers/Login/SignFormContainer';
+import SSOContainer from '../containers/Login/SSOContainer';
 
 const SignupSection = tw.section`
 min-h-full h-screen min-w-[500px] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800

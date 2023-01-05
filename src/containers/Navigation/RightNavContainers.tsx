@@ -1,3 +1,4 @@
+import React from 'react';
 import tw from 'tailwind-styled-components';
 import {
   ShoppingBagIcon,
@@ -5,6 +6,7 @@ import {
   MoonIcon,
   SearchIcon,
 } from '@heroicons/react/outline';
+
 import Btn from '../../components/navigation/Btn';
 
 const RightBar = tw.div`

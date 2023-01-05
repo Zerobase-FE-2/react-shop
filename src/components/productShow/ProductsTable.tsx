@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../../reducers/productSlice';
+import { Product } from '../../types';
 import ProductItemSkeleton from './Loading/ProductItemSkeleton';
 import ProductItem from './ProductItem';
 

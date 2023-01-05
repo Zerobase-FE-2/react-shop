@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
+
 import LeftNavContainers from './LeftNavContainers';
 import RightNavContainers from './RightNavContainers';
 

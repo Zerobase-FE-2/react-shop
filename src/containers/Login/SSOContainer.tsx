@@ -1,9 +1,13 @@
-import githubIcon from '../../assets/icon/iconGithub.svg';
-import googleIcon from '../../assets/icon/iconGoogle.svg';
+import React from 'react';
+
 import { githubSignIn, googleSignIn } from '../../service/auth';
 import { setSSOLoginSession } from '../../libs/setLoginSession';
+
 import { useAppDispatch } from '../../hooks/rtkHooks';
 import { logIn } from '../../reducers/userSlice';
+
+import { ReactComponent as GithubIcon } from '../../assets/icon/iconGithub.svg';
+import { ReactComponent as GoogleIcon } from '../../assets/icon/iconGoogle.svg';
 
 interface SSOProps {
   isSignup: boolean;
@@ -65,13 +69,13 @@ export default function SSOContainer({ isSignup }: SSOProps) {
         className={`btn btn-ghost ${isSignup ? '' : 'w-1/2'}`}
         onClick={loginWithGithub}
       >
-        <img src={githubIcon} className="h-10 w-10" alt="Icon_github" />
+        <GithubIcon />
       </button>
       <button
         className={`btn btn-ghost ${isSignup ? '' : 'w-1/2'}`}
         onClick={loginWithGoogle}
       >
-        <img src={googleIcon} className="h-10 w-10" alt="Icon_google" />
+        <GoogleIcon />
       </button>
     </div>
   );

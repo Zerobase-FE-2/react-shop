@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProductsTable from '../components/productShow/ProductsTable';
 import tw from 'tailwind-styled-components';
-import BreadCrumb from '../components/navigation/BreadCrumb';
-import { useAppDispatch, useAppSelector } from '../hooks/rtkHooks';
-import { fetchProducts, Product } from '../reducers/productSlice';
-import { getPropsFn } from '../containers/Main/Products';
-import SEOTag from '../components/SEOTag';
-import Navbar from '../containers/Navigation/Navbar';
+
 import useProducts from '../hooks/useProducts';
 
+import Layout from '../containers/Layout/LayoutContainer';
+import BreadCrumb from '../components/productShow/BreadCrumb';
+import { Category } from '../types';
+
 interface ItemPageProps {
-  category: 'digital' | 'accessory' | 'fashion';
+  category: Category;
 }
 
 const getTitle = {
@@ -24,17 +23,15 @@ const Title = tw.h1`
   `;
 
 export default function ItemPage({ category }: ItemPageProps) {
-  const { products, loading } = useProducts(category);
+  const { products, loading } = useProducts({ category });
 
   return (
-    <div className="h-[100vh] bg-white dark:bg-gray-800">
-      <SEOTag title={category} />
-      <Navbar />
-      <div className="p-4">{/* <BreadCrumb /> */}</div>
+    <Layout>
+      <BreadCrumb category={category} />
       <Title>{getTitle[category]}</Title>
       <div>
         <ProductsTable products={products} loading={loading} />
       </div>
-    </div>
+    </Layout>
   );
 }

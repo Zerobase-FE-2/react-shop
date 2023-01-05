@@ -2,13 +2,14 @@ import React from 'react';
 
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
+import Cart from './components/Cart';
+import ScrollToTop from './components/function/ScrollToTop';
+
+import ItemPage from './page/ItemPage';
 import MainPage from './page/MainPage';
 import Login from './page/Login';
 import SignUp from './page/SignUp';
 import ProductDescPage from './page/ProductDescPage';
-import Cart from './components/Cart';
-import ScrollToTop from './components/function/ScrollToTop';
-import ItemPage from './page/ItemPage';
 
 function App() {
   return (

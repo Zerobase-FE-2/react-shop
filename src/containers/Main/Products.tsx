@@ -7,14 +7,10 @@ import {
 } from '../../reducers/productSlice';
 import tw from 'tailwind-styled-components';
 import useProducts from '../../hooks/useProducts';
-
-interface ProductsProps {
-  title: string;
-  category: 'fashion' | 'accessory' | 'digital';
-}
+import { Category } from '../../page/MainPage';
 
 const Title = tw.h1`
-  text-3xl font-bold p-6 text-black dark:text-white
+  text-3xl font-bold p-6 text-black dark:text-white w-full text-center
   `;
 
 export const getPropsFn = {
@@ -23,7 +19,7 @@ export const getPropsFn = {
   accessory: getAccesoryProducts,
 };
 
-export default function Products({ title, category }: ProductsProps) {
+export default function Products({ title, category }: Category) {
   const { products, loading } = useProducts({ category });
 
   return (
