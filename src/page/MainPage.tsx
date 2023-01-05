@@ -1,11 +1,24 @@
 import React from 'react';
-import Index from '../components/Index';
-import Navbar from '../containers/Navigation/Navbar';
-import SEOTag from '../components/SEOTag';
-import Products from '../containers/Main/Products';
 import { useAppDispatch } from '../hooks/rtkHooks';
 import { useEffect } from 'react';
+
 import { fetchProducts } from '../reducers/productSlice';
+
+import Index from '../components/Index';
+import Products from '../containers/Main/Products';
+import Layout from '../containers/Layout/LayoutContainer';
+import { Category, Title } from '../types';
+
+export interface ProductcAttributes {
+  title: Title;
+  category: Category;
+}
+
+const categories: ProductcAttributes[] = [
+  { title: '패션', category: 'fashion' },
+  { title: '악세서리', category: 'accessory' },
+  { title: '디지털', category: 'digital' },
+];
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -15,17 +28,19 @@ export default function MainPage() {
   }, [dispatch]);
 
   return (
-    <div>
-      <SEOTag title="React Shop" />
-      <Navbar />
+    <Layout>
       <div id="container" className="w-full">
         <Index />
-        <div className="bg-white px-12 text-center dark:bg-gray-800">
-          <Products title="패션" category="fashion" />
-          <Products title="악세서리" category="accessory" />
-          <Products title="디지털" category="digital" />
+        <div className="px-12">
+          {categories.map((category, idx) => (
+            <Products
+              key={idx}
+              title={category.title}
+              category={category.category}
+            />
+          ))}
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }

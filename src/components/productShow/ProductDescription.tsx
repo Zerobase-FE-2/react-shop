@@ -1,5 +1,6 @@
 import React from 'react';
-import { Product } from '../../reducers/productSlice';
+import { Product } from '../../types';
+
 import tw from 'tailwind-styled-components';
 import { Link } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../reducers/productSlice';
+import { Product } from '../../types';
 
 interface ProductItemProps {
   product: Product;

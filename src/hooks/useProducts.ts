@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { getPropsFn } from './../containers/Main/Products';
-import { fetchProducts, Product } from '../reducers/productSlice';
+import { fetchProducts } from '../reducers/productSlice';
 import { useAppSelector, useAppDispatch } from './rtkHooks';
+import { Category, Product } from '../types';
 
 interface UseProductsProps {
-  category?: 'digital' | 'accessory' | 'fashion';
+  category?: Category;
 }
 
 export default function useProducts({ category }: UseProductsProps) {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useLocation } from 'react-router';
 import tw from 'tailwind-styled-components';
 import { ChevronRightIcon } from '@heroicons/react/outline';
+import { Category, Title } from '../../types';
 
 interface BreadCrumbProps {
-  category: string;
-  title: string;
+  category: Category;
+  title?: Title;
 }
 
 const BreadCrumbWrap = tw.div`
@@ -22,7 +22,7 @@ export default function BreadCrumb({ category, title }: BreadCrumbProps) {
   return (
     <BreadCrumbWrap>
       {getCategory(category)}
-      <ChevronRightIcon className="mx-2 h-3 w-3" />
+      {title ? <ChevronRightIcon className="mx-2 h-3 w-3" /> : null}
       {title}
     </BreadCrumbWrap>
   );

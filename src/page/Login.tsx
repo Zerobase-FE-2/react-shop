@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
+
 import { useNavigate } from 'react-router';
 import tw from 'tailwind-styled-components';
-import SEOTag from '../components/SEOTag';
+import { useAppSelector } from '../hooks/rtkHooks';
+import { firebaseConfig } from '../service/firebase';
+
 import LoginFormContainer from '../containers/Login/LoginFormContainer';
 import SSOContainer from '../containers/Login/SSOContainer';
-import { useAppDispatch, useAppSelector } from '../hooks/rtkHooks';
-import { firebaseConfig } from '../service/firebase';
+
+import SEOTag from '../components/SEOTag';
 
 const LoginSection = tw.section`
   min-h-screen h-screen min-w-[500px] flex items-center justify-center bg-white dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8
