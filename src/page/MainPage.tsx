@@ -25,7 +25,7 @@ export default function MainPage() {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+  }, []);
 
   return (
     <Layout>

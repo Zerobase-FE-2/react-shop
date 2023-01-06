@@ -7,6 +7,7 @@ import { getSelectedProduct } from '../reducers/productSlice';
 import ProductDescription from '../components/productShow/ProductDescription';
 import BreadCrumb from '../components/productShow/BreadCrumb';
 import Layout from '../containers/Layout/LayoutContainer';
+import ProductDescContainer from '../containers/Products/ProductDescContainer';
 
 export default function ProductDescPage() {
   const { productId } = useParams();
@@ -16,7 +17,7 @@ export default function ProductDescPage() {
   return (
     <Layout seoTitle={product.title}>
       <BreadCrumb category={product.category} title={product.title} />
-      <ProductDescription product={product} />
+      <ProductDescContainer product={product} />
     </Layout>
   );
 }

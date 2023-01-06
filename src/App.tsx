@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
-import Cart from './components/Cart';
+import Cart from './page/Cart';
 import ScrollToTop from './components/function/ScrollToTop';
 
 import ItemPage from './page/ItemPage';
