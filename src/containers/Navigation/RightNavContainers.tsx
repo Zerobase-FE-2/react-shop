@@ -8,6 +8,7 @@ import {
 } from '@heroicons/react/outline';
 
 import Btn from '../../components/navigation/Btn';
+import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
 
 const RightBar = tw.div`
 flex
@@ -18,6 +19,8 @@ absolute flex justify-center items-center text-white top-2 left-9 w-4 h-4 text-x
 `;
 
 export default function RightBtns() {
+  const { products } = useAppSelector((state) => state.cart);
+
   return (
     <RightBar>
       <Btn>
@@ -45,7 +48,7 @@ export default function RightBtns() {
       </Btn>
       <Btn isLink={true} link="cart">
         <ShoppingBagIcon className="mx-2 h-7 w-7" />
-        <CartCount>{1}</CartCount>
+        <CartCount>{products?.length || 0}</CartCount>
       </Btn>
       <Btn title="로그인" isLink={true} link="login" />
     </RightBar>

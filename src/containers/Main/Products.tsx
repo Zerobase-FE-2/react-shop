@@ -7,7 +7,7 @@ import {
 } from '../../reducers/productSlice';
 import tw from 'tailwind-styled-components';
 import useProducts from '../../hooks/useProducts';
-import { Category } from '../../page/MainPage';
+import { ProductsAttributes } from '../../page/MainPage';
 
 const Title = tw.h1`
   text-3xl font-bold p-6 text-black dark:text-white w-full text-center
@@ -19,7 +19,7 @@ export const getPropsFn = {
   accessory: getAccesoryProducts,
 };
 
-export default function Products({ title, category }: Category) {
+export default function Products({ title, category }: ProductsAttributes) {
   const { products, loading } = useProducts({ category });
 
   return (
