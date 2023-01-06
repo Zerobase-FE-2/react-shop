@@ -9,12 +9,12 @@ import Products from '../containers/Main/Products';
 import Layout from '../containers/Layout/LayoutContainer';
 import { Category, Title } from '../types';
 
-export interface ProductcAttributes {
+export interface ProductsAttributes {
   title: Title;
   category: Category;
 }
 
-const categories: ProductcAttributes[] = [
+const categories: ProductsAttributes[] = [
   { title: '패션', category: 'fashion' },
   { title: '악세서리', category: 'accessory' },
   { title: '디지털', category: 'digital' },
