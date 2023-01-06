@@ -10,8 +10,10 @@ const Index = () => {
     infinite: true,
     draggable: true,
     autoplay: true,
-    autoplaySpeed: 10000,
+    autoplaySpeed: 5000,
+    speed: 1000,
     pauseOnHover: true,
+    dots: true,
   };
   return (
     <Slider {...settings}>

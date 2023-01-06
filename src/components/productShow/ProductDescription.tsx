@@ -3,6 +3,7 @@ import { Product } from '../../types';
 
 import tw from 'tailwind-styled-components';
 import { Link } from 'react-router-dom';
+import { FunctionTypeNode } from 'typescript';
 
 const ProductDIV = tw.div`
   flex flex-col min-h-screen lg:flex-row px-10 pt-16 bg-white dark:bg-gray-800
@@ -10,10 +11,12 @@ const ProductDIV = tw.div`
 
 interface ProductDescriptionProps {
   product: Product;
+  handleClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function ProductDescription({
   product,
+  handleClick,
 }: ProductDescriptionProps) {
   return (
     <ProductDIV key={product.id}>
@@ -38,16 +41,7 @@ export default function ProductDescription({
           ${product.price}
         </p>
         <div className="py-0 lg:py-4">
-          <button
-            className="btn-primary mr-4"
-            onClick={
-              () => {}
-              // dispatch({
-              //   type: 'ADD',
-              //   payload: { id: product.id, count: 1 },
-              // })
-            }
-          >
+          <button className="btn-primary mr-4" onClick={handleClick}>
             장바구니에 담기
           </button>
           <button className="btn-primary border-2 border-solid border-black bg-inherit text-black hover:border-black hover:bg-black hover:text-white dark:border-gray-100 dark:text-white dark:hover:border-gray-500 dark:hover:bg-gray-500">
