@@ -20,8 +20,8 @@ export default function Btn({
   return (
     <>
       {isLink ? (
-        <button className="text-md relative mx-2 hidden p-2 font-semibold text-black hover:rounded-lg hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 lg:block">
-          <Link className="h-full w-full" to={`/${link}`}>
+        <button className="text-md btn-ghost relative mx-2 hidden h-full w-full p-2 font-semibold text-black hover:rounded-lg hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 lg:block">
+          <Link className=" h-full w-full" to={`/${link}`}>
             {title}
             {children}
           </Link>

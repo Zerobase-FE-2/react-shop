@@ -85,7 +85,7 @@ export default function SearchBar({ isVisible }: { isVisible: boolean }) {
         <AutoCompleteContainer>
           <SearchedList ref={autoRef}>
             {keyItems.map((item, idx) => (
-              <Link to={`${item.id}`} key={item.title}>
+              <Link to={`/${item.id}`} key={item.title}>
                 <SearchedItem
                   isFocus={index === idx ? true : false}
                   onClick={() => {

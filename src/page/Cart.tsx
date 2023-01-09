@@ -23,6 +23,10 @@ export default function Cart() {
   const totalPrice = useAppSelector(getTotalPrice);
   const [popUp, setPopUp] = useState(false);
 
+  const handlePopup = () => {
+    setPopUp(!popUp);
+  };
+
   useEffect(() => {
     products?.forEach((product) => {
       if (product.cnt <= 0) dispatch(removeCart(product));
@@ -66,7 +70,7 @@ export default function Cart() {
           <CartEmpty />
         )}
 
-        {popUp && <PopUp state={popUp} func={setPopUp} />}
+        {popUp && <PopUp handlePopup={handlePopup} />}
       </CartWrap>
     </Layout>
   );
