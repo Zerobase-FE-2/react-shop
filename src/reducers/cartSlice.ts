@@ -22,7 +22,6 @@ export const cartSlice = createSlice({
       state.products = [];
     },
     addCart: (state, action: PayloadAction<{ product: Product }>) => {
-      console.log(action.payload);
       state.products?.push({
         product: action.payload.product,
         cnt: 1,

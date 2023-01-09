@@ -9,7 +9,6 @@ interface UseProductsProps {
 }
 
 export default function useProducts({ category }: UseProductsProps) {
-  const dispatch = useAppDispatch();
   let products;
   if (category) {
     products = useAppSelector<Product[]>(getPropsFn[category]);
@@ -18,12 +17,6 @@ export default function useProducts({ category }: UseProductsProps) {
   }
 
   const loading = useAppSelector((state) => state.products.loading);
-
-  useEffect(() => {
-    if (!products.length) {
-      dispatch(fetchProducts());
-    }
-  }, [products, dispatch]);
 
   return { products, loading };
 }

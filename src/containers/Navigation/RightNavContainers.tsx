@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import {
   ShoppingBagIcon,
@@ -8,7 +8,8 @@ import {
 } from '@heroicons/react/outline';
 
 import Btn from '../../components/navigation/Btn';
-import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks';
+import SearchBar from '../../components/navigation/SearchBar';
+import { useAppSelector } from '../../hooks/rtkHooks';
 
 const RightBar = tw.div`
 flex
@@ -20,7 +21,9 @@ absolute flex justify-center items-center text-white top-2 left-9 w-4 h-4 text-x
 
 export default function RightBtns() {
   const { products } = useAppSelector((state) => state.cart);
-
+  const { username } = useAppSelector((state) => state.user);
+  const [siVisible, setSiVisible] = useState(true);
+  const handleClick = () => setSiVisible(!siVisible);
   return (
     <RightBar>
       <Btn>
@@ -30,27 +33,18 @@ export default function RightBtns() {
           <MoonIcon className="mx-2 h-7 w-7" />
         )}
       </Btn>
-      {/* <SearchBar /> */}
-      <Btn>
+      <SearchBar isVisible={siVisible} />
+      <Btn isVisible={siVisible}>
         <SearchIcon
-          className="mx-2 h-7 w-7"
-          onClick={() => {
-            const search = document.querySelector('input');
-            if (search?.classList.contains('hidden')) {
-              search?.classList.remove('hidden');
-              search?.classList.add('block');
-            } else {
-              search?.classList.remove('block');
-              search?.classList.add('hidden');
-            }
-          }}
+          className={`mx-2 h-7 w-7 transition-all `}
+          onClick={handleClick}
         />
       </Btn>
       <Btn isLink={true} link="cart">
         <ShoppingBagIcon className="mx-2 h-7 w-7" />
         <CartCount>{products?.length || 0}</CartCount>
       </Btn>
-      <Btn title="로그인" isLink={true} link="login" />
+      <Btn title={username || '로그인'} isLink={true} link="login" />
     </RightBar>
   );
 }
