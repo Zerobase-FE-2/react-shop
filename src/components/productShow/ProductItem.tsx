@@ -20,7 +20,7 @@ export default function ProductItem({ product }: ProductItemProps) {
             alt={product.title}
           />
         </figure>
-        <div className="flex h-28 flex-col items-start justify-between overflow-auto bg-gray-200 p-4 text-black dark:rounded-b-lg dark:bg-gray-700 dark:text-gray-400">
+        <div className="flex h-28 flex-col items-start justify-between overflow-auto rounded-b-lg bg-gray-200 p-4 text-black dark:bg-gray-700 dark:text-gray-400">
           <span className="overflow-hidden text-start text-lg font-semibold">
             {product.title}
           </span>

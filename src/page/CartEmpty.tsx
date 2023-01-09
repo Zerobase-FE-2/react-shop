@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default function CartEmpty() {
   return (
-    <div>
-      <span className="text-2xl text-black dark:text-gray-400">
+    <div className="flex w-full justify-around">
+      <span className="block text-2xl text-black dark:text-gray-400">
         장바구니에 물품이 없습니다.
       </span>
       <Link to="/">
