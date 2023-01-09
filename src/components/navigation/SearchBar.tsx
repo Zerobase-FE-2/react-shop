@@ -10,7 +10,7 @@ const SearchContainer = tw.div`
 flex items-center
 `;
 const Search = tw.input`
-hidden md:block absolute md:static top-16 left-0 w-full md:w-42 h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
+h-5/6 px-4 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-sm outline-none
 `;
 const AutoCompleteContainer = tw.div`
 absolute w-screen md:w-60 h-auto absolute z-10 top-28 md:top-16 left-0 md:left-auto p-1 bg-white dark:bg-gray-700 shadow-xl
@@ -70,11 +70,7 @@ export default function SearchBar({ isVisible }: { isVisible: boolean }) {
   }, [keyword]);
 
   return (
-    <SearchContainer
-      className={`${
-        isVisible ? 'hidden w-0' : ''
-      } transition-all duration-1000`}
-    >
+    <SearchContainer>
       <Search
         value={keyword}
         placeholder="검색"
