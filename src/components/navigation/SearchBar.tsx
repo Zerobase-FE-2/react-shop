@@ -1,22 +1,11 @@
-import React, { useRef } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import { Link, useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
+import { useAppSelector } from '../../hooks/rtkHooks';
 
-interface autoDatas {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
+import { Product } from '../../types';
 const SearchContainer = tw.div`
 flex items-center
 `;
@@ -35,49 +24,39 @@ p-1 hover:bg-gray-100 dark:hover:bg-gray-600 text-black dark:text-white ${(
 ) =>
   props.isFocus ? 'bg-gray-100 dark:bg-gray-600' : 'bg-white dark:bg-gray-700'}
 `;
-export default function SearchBar() {
+export default function SearchBar({ isVisible }: { isVisible: boolean }) {
   const [keyword, setKeyword] = useState<string>('');
-  const [keyItems, setKeyItems] = useState<autoDatas[]>([]);
+  const [keyItems, setKeyItems] = useState<Product[]>([]);
   const [index, setIndex] = useState<number>(-1);
+
+  const itemList = useAppSelector((state) => state.products.products);
+
   const autoRef = useRef<HTMLUListElement>(null);
+
   const onChangeData = (e: React.FormEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
   };
+
   const navigate = useNavigate();
-  const ArrowDown = 'ArrowDown';
-  const ArrowUp = 'ArrowUp';
-  const Escape = 'Escape';
-  const Selec = 'Enter';
+
   const handleKeyArrow = (e: React.KeyboardEvent) => {
     if (keyItems.length > 0) {
       switch (e.key) {
-        case ArrowDown: //키보드 아래 키
-          console.log(e);
+        case 'ArrowDown':
           setIndex(index + 1);
           if (autoRef.current?.childElementCount === index + 1) setIndex(0);
-          console.log(index);
-
           break;
-        case ArrowUp: //키보드 위에 키
+        case 'ArrowUp':
           setIndex(index - 1);
-          console.log(e);
-          if (index <= 0) {
-            //setKeyItems([]);
-            setIndex(-1);
-          }
-          console.log(index);
+          if (index <= 0) setIndex(-1);
           break;
-        case Selec: // enter key를 눌렀을때,
-          // setKeyword(`${keyItems[index].title}`);
+        case 'Enter':
           setKeyword(``);
           setKeyItems([]);
           setIndex(-1);
-          // location.href = `${keyItems[index].id}`;
-          // return <Link to={`${keyItems[index].id}`} key={keyItems[index].title} />
           navigate(`/${keyItems[index].id}`);
           break;
-        case Escape: // esc key를 눌렀을때,
-          console.log(index);
+        case 'Escape':
           setKeyItems([]);
           setIndex(-1);
           break;
@@ -85,42 +64,17 @@ export default function SearchBar() {
     }
   };
 
-  const calledItems = useSelector((state: any) => state.itemList);
-  // console.log(calledItems.state);
-  let itemList = calledItems.state;
-  // console.log(itemList);
-
-  interface ICity {
-    includes(data: string): boolean;
-    title?: any;
-  }
-  const updateData = async () => {
-    // const res = await itemList;
-    const res = itemList;
-    let b = res
-      .filter(
-        (list: ICity) =>
-          list.title.toLowerCase().includes(keyword) === true ||
-          list.title.toLowerCase().split(' ').join('').includes(keyword) ===
-            true ||
-          list.title.toUpperCase().includes(keyword) === true ||
-          list.title.toUpperCase().split(' ').join('').includes(keyword) ===
-            true
-      )
-      .slice(0, 10);
-    // console.log(b);
-    setKeyItems(b);
-  };
   useEffect(() => {
-    const debounce = setTimeout(() => {
-      if (keyword) updateData();
-    }, 100);
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [keyword]); //키워드가 변경되면 api를 호출
+    const newItems = itemList.filter((item) => item.title.includes(keyword));
+    setKeyItems(newItems);
+  }, [keyword]);
+
   return (
-    <SearchContainer>
+    <SearchContainer
+      className={`${
+        isVisible ? 'hidden w-0' : ''
+      } transition-all duration-1000`}
+    >
       <Search
         value={keyword}
         placeholder="검색"
@@ -130,15 +84,15 @@ export default function SearchBar() {
       {keyItems.length > 0 && keyword && (
         <AutoCompleteContainer>
           <SearchedList ref={autoRef}>
-            {keyItems.map((search, idx) => (
-              <Link to={`${search.id}`} key={search.title}>
+            {keyItems.map((item, idx) => (
+              <Link to={`${item.id}`} key={item.title}>
                 <SearchedItem
                   isFocus={index === idx ? true : false}
                   onClick={() => {
                     setKeyword('');
                   }}
                 >
-                  {search.title}
+                  {item.title}
                 </SearchedItem>
               </Link>
             ))}

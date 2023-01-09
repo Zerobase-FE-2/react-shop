@@ -3,7 +3,7 @@ import { Product } from '../../types';
 
 import tw from 'tailwind-styled-components';
 import { Link } from 'react-router-dom';
-import { FunctionTypeNode } from 'typescript';
+import Rating from './Rating';
 
 const ProductDIV = tw.div`
   flex flex-col min-h-screen lg:flex-row px-10 pt-16 bg-white dark:bg-gray-800
@@ -35,7 +35,7 @@ export default function ProductDescription({
           {product.description}
         </p>
         <div className="py-0 lg:py-4">
-          {product.rating.count}/{product.rating.count}
+          <Rating rate={product.rating.rating} count={product.rating.count} />
         </div>
         <p className="py-4 text-xl font-semibold text-black dark:text-gray-400 lg:py-0">
           ${product.price}

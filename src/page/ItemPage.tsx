@@ -29,7 +29,7 @@ export default function ItemPage({ category }: ItemPageProps) {
     <Layout>
       <BreadCrumb category={category} />
       <Title>{getTitle[category]}</Title>
-      <div>
+      <div className="px-12">
         <ProductsTable products={products} loading={loading} />
       </div>
     </Layout>
